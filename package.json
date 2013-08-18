@@ -1,0 +1,45 @@
+{
+  "name": "roole-evaluator",
+  "version": "0.1.0",
+  "description": "Evaluator for the Roole language",
+  "main": "lib/index.js",
+  "directories": {
+  	"lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --bail --compilers coffee:coffee-script --ui qunit test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/curvedmark/roole-evaluator.git"
+  },
+  "keywords": [
+    "roole",
+    "evaluator",
+    "visitor"
+  ],
+  "author": "Glen Huang <curvedmark@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/curvedmark/roole/issues"
+  },
+  "dependencies": {
+    "promise-now": "1.x",
+    "promise-any-first": "1.x",
+    "tree-visitor": "*",
+    "tree-transformer": "*",
+    "tree-transformer-async": "*",
+    "roole-error": "*",
+    "roole-node": "*",
+    "roole-parser": "*",
+    "opath": "1.x",
+    "opurl": "1.x"
+  },
+  "devDependencies": {
+    "mocha": "1.x",
+    "mocha-as-promised": "1.x",
+    "roole-compiler": "*",
+    "coffee-script": "1.x"
+  }
+}
