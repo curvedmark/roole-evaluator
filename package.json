@@ -27,9 +27,9 @@
   "dependencies": {
     "promise-now": "1.x",
     "promise-any-first": "1.x",
-    "tree-visitor": "*",
-    "tree-transformer": "*",
-    "tree-transformer-async": "*",
+    "tree-visitor": "1.x",
+    "tree-transformer": "1.x",
+    "tree-transformer-async": "1.x",
     "roole-error": "*",
     "roole-node": "*",
     "roole-parser": "*",
