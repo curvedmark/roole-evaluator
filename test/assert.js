@@ -6,13 +6,14 @@ var evaluator = require('..');
 require('mocha-as-promised')();
 
 exports.compileTo = function (input, css) {
-	var opts = {}
+	var opts = {
+		filename: '/index.roo',
+		out: '/'
+	};
 
-	if (Array.isArray(input)) {
-		var imports = input;
-		input = imports.pop();
-		imports = imports.pop()
-		opts.imports = imports;
+	if (typeof input !== 'string') {
+		opts.imports = input;
+		input = input['/index.roo'];
 	}
 
 	return new Promise().fulfill().then(function () {
@@ -33,13 +34,14 @@ exports.compileTo = function (input, css) {
 };
 
 exports.failAt = function (input, loc) {
-	var opts = {}
+	var opts = {
+		filename: '/index.roo',
+		out: '/'
+	};
 
-	if (Array.isArray(input)) {
-		var imports = input;
-		input = imports.pop();
-		imports = imports.pop()
-		opts.imports = imports;
+	if (typeof input !== 'string') {
+		opts.imports = input;
+		input = input['/index.roo'];
 	}
 
 	return new Promise().fulfill().then(function () {

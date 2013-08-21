@@ -35,11 +35,11 @@ test "@media creates new scope", ->
 	'''
 
 test "@import does not create new scope", ->
-	assert.compileTo [
-		'base.roo': '''
+	assert.compileTo {
+		'/base.roo': '''
 			$width = 500px;
 		'''
-		'''
+		'/index.roo': '''
 			$width = 980px;
 
 			@import './base';
@@ -48,24 +48,24 @@ test "@import does not create new scope", ->
 				width: $width;
 			}
 		'''
-	], '''
+	}, '''
 		body {
 			width: 500px;
 		}
 	'''
 
 test "importing file expose variables", ->
-	assert.compileTo [
-		'base.roo': '''
+	assert.compileTo {
+		'/base.roo': '''
 			body {
 				width: $width;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			$width = 980px;
 			@import './base';
 		'''
-	], '''
+	}, '''
 		body {
 			width: 980px;
 		}

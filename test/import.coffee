@@ -3,16 +3,16 @@ assert = require './assert'
 suite '@import'
 
 test "string as url", ->
-	assert.compileTo [
-		'base.roo': '''
+	assert.compileTo {
+		'/base.roo': '''
 			body {
 				margin: 0;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import './base';
 		'''
-	], '''
+	}, '''
 		body {
 			margin: 0;
 		}
@@ -54,23 +54,23 @@ test "contain media query list", ->
 	'''
 
 test "recursively import", ->
-	assert.compileTo [
-		'reset.roo': '''
+	assert.compileTo {
+		'/reset.roo': '''
 			body {
 				margin: 0;
 			}
 		'''
-		'button.roo': '''
+		'/button.roo': '''
 			@import './reset';
 
 			.button {
 				display: inline-block;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import './button';
 		'''
-	], '''
+	}, '''
 		body {
 			margin: 0;
 		}
@@ -81,31 +81,31 @@ test "recursively import", ->
 	'''
 
 test "import same file multiple times", ->
-	assert.compileTo [
-		'reset.roo': '''
+	assert.compileTo {
+		'/reset.roo': '''
 			body {
 				margin: 0;
 			}
 		'''
-		'button.roo': '''
+		'/button.roo': '''
 			@import './reset';
 
 			.button {
 				display: inline-block;
 			}
 		'''
-		'tabs.roo': '''
+		'/tabs.roo': '''
 			@import './reset';
 
 			.tabs {
 				overflow: hidden;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import './button';
 			@import './tabs';
 		'''
-	], '''
+	}, '''
 		body {
 			margin: 0;
 		}
@@ -120,23 +120,23 @@ test "import same file multiple times", ->
 	'''
 
 test "recursively import files of the same directory", ->
-	assert.compileTo [
-		'tabs/tab.roo': '''
+	assert.compileTo {
+		'/tabs/tab.roo': '''
 			.tab {
 				float: left;
 			}
 		'''
-		'tabs/index.roo': '''
+		'/tabs/index.roo': '''
 			@import './tab';
 
 			.tabs {
 				overflow: hidden;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import './tabs/index';
 		'''
-	], '''
+	}, '''
 		.tab {
 			float: left;
 		}
@@ -147,23 +147,23 @@ test "recursively import files of the same directory", ->
 	'''
 
 test "recursively import files of different directories", ->
-	assert.compileTo [
-		'reset.roo': '''
+	assert.compileTo {
+		'/reset.roo': '''
 			body {
 				margin: 0;
 			}
 		'''
-		'tabs/index.roo': '''
+		'/tabs/index.roo': '''
 			@import '../reset';
 
 			.tabs {
 				overflow: hidden;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import './tabs/index';
 		'''
-	], '''
+	}, '''
 		body {
 			margin: 0;
 		}
@@ -174,79 +174,79 @@ test "recursively import files of different directories", ->
 	'''
 
 test "import index.roo when importing a directory", ->
-	assert.compileTo [
-		'tabs/index.roo': '''
+	assert.compileTo {
+		'/tabs/index.roo': '''
 			.tabs {
 				overflow: hidden;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import './tabs';
 		'''
-	], '''
+	}, '''
 		.tabs {
 			overflow: hidden;
 		}
 	'''
 
 test "import file specified in package.json when importing a directory", ->
-	assert.compileTo [
-		'tabs/index.roo': '''
+	assert.compileTo {
+		'/tabs/index.roo': '''
 			.tabs {
 				overflow: hidden;
 			}
 		'''
-		'tabs/tab.roo': '''
+		'/tabs/tab.roo': '''
 			.tab {
 				float: left;
 			}
 		'''
-		'tabs/package.json': '''
+		'/tabs/package.json': '''
 			{ "main": "tab.roo" }
 		'''
-		'''
+		'/index.roo': '''
 			@import './tabs';
 		'''
-	], '''
+	}, '''
 		.tab {
 			float: left;
 		}
 	'''
 
 test "import lib", ->
-	assert.compileTo [
-		'node_modules/tabs/index.roo': '''
+	assert.compileTo {
+		'/node_modules/tabs/index.roo': '''
 			.tabs {
 				overflow: hidden;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import 'tabs';
 		'''
-	], '''
+	}, '''
 		.tabs {
 			overflow: hidden;
 		}
 	'''
 
 test "recursively find location when importing lib", ->
-	assert.compileTo [
-		'node_modules/button/index.roo': '''
+	assert.compileTo {
+		'/node_modules/button/index.roo': '''
 			.button {
 				display: inline-block;
 			}
 		'''
-		'tabs/index.roo': '''
+		'/tabs/index.roo': '''
 			@import 'button';
 
 			.tabs {
 				overflow: hidden;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import './tabs';
 		'''
-	], '''
+	}, '''
 		.button {
 			display: inline-block;
 		}
@@ -257,69 +257,67 @@ test "recursively find location when importing lib", ->
 	'''
 
 test "importing file with variables in the path", ->
-	assert.compileTo [
-		'tabs.roo': '''
+	assert.compileTo {
+		'/tabs.roo': '''
 			.tabs {
 				overflow: hidden;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			$path = './tabs';
 			@import $path;
 		'''
-	], '''
+	}, '''
 		.tabs {
 			overflow: hidden;
 		}
 	'''
 
 test "disallow importing file with syntax error", ->
-	assert.failAt [
-		'base.roo': '''
+	assert.failAt {
+		'/base.roo': '''
 			body # {
 				margin: 0;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@import './base';
 		'''
-	], {line: 1, column: 7, filename: 'base.roo'}
+	}, {line: 1, column: 7, filename: '/base.roo'}
 
 test "disallow importing file that doesn't exist", ->
-	assert.failAt [
-		'''
-			@import './base';
-		'''
-	], {line: 1, column: 1}
+	assert.failAt '''
+		@import './base';
+	''', {line: 1, column: 1}
 
 test "nest in ruleset", ->
-	assert.compileTo [
-		'base.roo': '''
+	assert.compileTo {
+		'/base.roo': '''
 			body {
 				margin: 0;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			html {
 				@import './base';
 			}
 		'''
-	], '''
+	}, '''
 		html body {
 			margin: 0;
 		}
 	'''
 
 test "nest in @void", ->
-	assert.compileTo [
-		'base.roo': '''
+	assert.compileTo {
+		'/base.roo': '''
 			body {
 				margin: 0;
 			}
 		'''
-		'''
+		'/index.roo': '''
 			@void {
 				@import './base';
 			}
 		'''
-	], ''
+	}, ''

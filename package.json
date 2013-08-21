@@ -32,9 +32,7 @@
     "tree-transformer-async": "1.x",
     "roole-error": "*",
     "roole-node": "*",
-    "roole-parser": "*",
-    "opath": "1.x",
-    "opurl": "1.x"
+    "roole-parser": "*"
   },
   "devDependencies": {
     "mocha": "1.x",

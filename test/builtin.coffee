@@ -244,3 +244,19 @@ test "$opp(top dimension)", ->
 			content: bottom 1px;
 		}
 	'''
+
+test "$__dirname", ->
+	assert.compileTo {
+		'/tabs/index.roo': '''
+			li {
+				background: url("$__dirname/bg.png")
+			}
+		'''
+		'/index.roo': '''
+			@import './tabs';
+		'''
+	}, '''
+		li {
+			background: url("tabs/bg.png");
+		}
+	'''
