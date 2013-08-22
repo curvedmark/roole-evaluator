@@ -2,25 +2,16 @@ assert = require './assert'
 
 suite 'function'
 
-test "css function, single argument", ->
+test "calc() with variables", ->
 	assert.compileTo '''
+		$margin = 50%;
+		$padding = 20px + 10px;
 		a {
-			content: attr(href);
+			content: calc($margin + $padding);
 		}
 	''', '''
 		a {
-			content: attr(href);
-		}
-	'''
-
-test "css function, multiple arguments", ->
-	assert.compileTo '''
-		a {
-			content: counters(item, '.');
-		}
-	''', '''
-		a {
-			content: counters(item, '.');
+			content: calc(50% + 30px);
 		}
 	'''
 
