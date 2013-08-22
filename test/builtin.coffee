@@ -13,6 +13,28 @@ test "$len(list)", ->
 		}
 	'''
 
+test "$len(empty list)", ->
+	assert.compileTo '''
+		a {
+			content: $len([]);
+		}
+	''', '''
+		a {
+			content: 0;
+		}
+	'''
+
+test "$len(one item list)", ->
+	assert.compileTo '''
+		a {
+			content: $len([1]);
+		}
+	''', '''
+		a {
+			content: 1;
+		}
+	'''
+
 test "$len(value)", ->
 	assert.compileTo '''
 		a {
