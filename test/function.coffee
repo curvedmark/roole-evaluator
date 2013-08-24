@@ -21,18 +21,18 @@ test "no params", ->
 			@return 960px;
 		};
 
-		body {
+		a {
 			width: $width();
 		}
 	''', '''
-		body {
+		a {
 			width: 960px;
 		}
 	'''
 
 test "not allow undefined function", ->
 	assert.failAt '''
-		body {
+		a {
 			width: $width();
 		}
 	''', {line: 2, column: 9}
@@ -41,21 +41,21 @@ test "not allow non-function to be called", ->
 	assert.failAt '''
 		$width = 960px;
 
-		body {
+		a {
 			width: $width();
 		}
 	''', {line: 4, column: 9}
 
 test "not allow using @return outside @function", ->
 	assert.failAt '''
-		body {
+		a {
 			@return 1;
 		}
 	''', {line: 2, column: 2}
 
 test "call function multiple times", ->
 	assert.compileTo '''
-		body {
+		a {
 			$value = 960px;
 			$get-value = @function {
 			  @return $value;
@@ -68,7 +68,7 @@ test "call function multiple times", ->
 		}
 
 	''', '''
-		body {
+		a {
 			width: 960px;
 			height: 400px;
 		}
@@ -80,11 +80,11 @@ test "specify parameter", ->
 			@return $width;
 		};
 
-		body {
+		a {
 			width: $width(960px);
 		}
 	''', '''
-		body {
+		a {
 			width: 960px;
 		}
 	'''
@@ -95,11 +95,11 @@ test "specify default parameter", ->
 			@return $width;
 		};
 
-		body {
+		a {
 			width: $width();
 		}
 	''', '''
-		body {
+		a {
 			width: 960px;
 		}
 	'''
@@ -110,11 +110,11 @@ test "specify default parameter, overriden", ->
 			@return $width;
 		};
 
-		body {
+		a {
 			width: $width(400px);
 		}
 	''', '''
-		body {
+		a {
 			width: 400px;
 		}
 	'''
@@ -125,31 +125,42 @@ test "under-specify arguments", ->
 			@return $h $v;
 		};
 
-		body {
+		a {
 			margin: $margin(20px);
 		}
 	''', '''
-		body {
+		a {
 			margin: 20px null;
 		}
 	'''
 
 test "rest argument", ->
 	assert.compileTo '''
-		$add = @function ...$numbers {
-			$sum = 0;
-			@for $number in $numbers {
-				$sum = $sum + $number;
-			}
-			@return $sum;
+		$lasts = @function $num, ...$rest {
+			@return $rest;
 		};
 
-		body {
-			width: $add(1, 2, 3, 4);
+		a {
+			content: $lasts(1, 2, 3, 4);
 		}
 	''', '''
-		body {
-			width: 10;
+		a {
+			content: 2, 3, 4;
+		}
+	'''
+
+test "empty rest argument", ->
+	assert.compileTo '''
+		$lasts = @function $num, ...$rest {
+			@return $rest;
+		};
+
+		a {
+			content: $lasts();
+		}
+	''', '''
+		a {
+			content: [];
 		}
 	'''
 
@@ -163,11 +174,11 @@ test "ignore rules under @return", ->
 			@return $width;
 		};
 
-		body {
+		a {
 			width: $width();
 		}
 	''', '''
-		body {
+		a {
 			width: 960px;
 		}
 	'''
@@ -183,11 +194,11 @@ test "ignore block rules", ->
 			@return $width;
 		};
 
-		body {
+		a {
 			width: $width();
 		}
 	''', '''
-		body {
+		a {
 			width: 960px;
 		}
 	'''
@@ -200,11 +211,11 @@ test "implicit @return", ->
 			}
 		};
 
-		body {
+		a {
 			width: $width();
 		}
 	''', '''
-		body {
+		a {
 			width: null;
 		}
 	'''
@@ -215,12 +226,27 @@ test "$arguments", ->
 			@return $arguments;
 		};
 
-		body {
-			-foo: $arguments(foo, bar)
+		a {
+			content: $arguments(foo, bar)
 		}
 	''', '''
-		body {
-			-foo: foo, bar;
+		a {
+			content: foo, bar;
+		}
+	'''
+
+test "empty $arguments", ->
+	assert.compileTo '''
+		$arguments = @function {
+			@return $arguments;
+		};
+
+		a {
+			content: $arguments()
+		}
+	''', '''
+		a {
+			content: [];
 		}
 	'''
 
@@ -231,13 +257,13 @@ test "do not modify arguments by direct assignment", ->
 			@return $param;
 		};
 
-		body {
+		a {
 			$arg = 0;
-			-foo: $modify($arg) $arg;
+			content: $modify($arg) $arg;
 		}
 	''', '''
-		body {
-			-foo: 1 0;
+		a {
+			content: 1 0;
 		}
 	'''
 
@@ -251,11 +277,11 @@ test "function called within a mixin", ->
 		  width: $bar();
 		};
 
-		body {
+		a {
 			@mixin $foo();
 		}
 	''', '''
-		body {
+		a {
 			width: 80px;
 		}
 	'''
@@ -267,12 +293,12 @@ test "lexical scope", ->
 		  @return $var;
 		};
 
-		body {
+		a {
 		  $var = 2;
-		  -foo: $func();
+		  content: $func();
 		}
 	''', '''
-		body {
-			-foo: 1;
+		a {
+			content: 1;
 		}
 	'''

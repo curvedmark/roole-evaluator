@@ -68,13 +68,13 @@ test "number + number .. number * number", ->
 		}
 	'''
 
-test "list containing empty range", ->
+test "list containing range", ->
 	assert.compileTo '''
 		body {
-			-foo: 3 1 + 1 ... 1 * 2;
+			-foo: 3 1 + 1 ... 1 * 3;
 		}
 	''', '''
 		body {
-			-foo: 3 null;
+			-foo: 3 2;
 		}
 	'''

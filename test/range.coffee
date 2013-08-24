@@ -64,7 +64,7 @@ test "empty range", ->
 		}
 	''', '''
 		a {
-			content: null;
+			content: [];
 		}
 	'''
 

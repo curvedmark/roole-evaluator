@@ -30,6 +30,7 @@
     "tree-visitor": "1.x",
     "tree-transformer": "1.x",
     "tree-transformer-async": "1.x",
+    "natural-range": "1.x",
     "roole-error": "*",
     "roole-node": "*",
     "roole-parser": "*"
