@@ -27,3 +27,4 @@ var promise = evaluator.evaluate(ast, [options]);
 * `options` - An object literal supporting these options:
 	* `imports` (default: `{}`) - An object literal containing files to be imported, keys are file paths, values are the contents. When a imported file matches a file path, the content will be used directly, and no external request is generated.
 	* `out` - Absolute path of the directory where the compiled CSS will be written to. Used to determine the value of `$__dirname` etc.
+	* `scope` - An array of object literals, which are used as scopes if provided
