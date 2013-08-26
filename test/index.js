@@ -24,4 +24,3 @@ require('./function');
 require('./module');
 require('./member');
 require('./scope');
-require('./builtin');

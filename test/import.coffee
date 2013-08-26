@@ -2,7 +2,7 @@ assert = require './assert'
 
 suite '@import'
 
-test "string as url", ->
+test "path", ->
 	assert.compileTo {
 		'/base.roo': '''
 			body {
@@ -18,21 +18,21 @@ test "string as url", ->
 		}
 	'''
 
-test "string starting with protocol as url", ->
+test "url string starting with protocol", ->
 	assert.compileTo '''
 		@import 'http://example.com/style';
 	''', '''
 		@import 'http://example.com/style';
 	'''
 
-test "string ending with .css as url", ->
+test "url string ending with .css", ->
 	assert.compileTo '''
 		@import 'tabs.css';
 	''', '''
 		@import 'tabs.css';
 	'''
 
-test "url() as url", ->
+test "url using url()", ->
 	assert.compileTo '''
 		@import url(base);
 	''', '''
@@ -289,6 +289,22 @@ test "disallow importing file that doesn't exist", ->
 	assert.failAt '''
 		@import './base';
 	''', {line: 1, column: 1}
+
+test "url", ->
+	assert.compileTo {
+		'http://example.com/base.roo': '''
+			body {
+				margin: 0;
+			}
+		'''
+		'http://example.com/index.roo': '''
+			@import './base';
+		'''
+	}, '''
+		body {
+			margin: 0;
+		}
+	'''
 
 test "nest in ruleset", ->
 	assert.compileTo {
