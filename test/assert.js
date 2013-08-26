@@ -5,11 +5,15 @@ var compiler = require('roole-compiler');
 var evaluator = require('..');
 require('mocha-as-promised')();
 
-exports.compileTo = function (input, css) {
-	var opts = {
-		filename: '/index.roo',
-		out: '/'
-	};
+exports.compileTo = function (opts, input, css) {
+	if (!css) {
+		css = input;
+		input = opts;
+		opts = {}
+	}
+
+	if (!opts.filename) opts.filename = '/index.roo';
+	if (!opts.out) opts.out = '/';
 
 	if (typeof input !== 'string') {
 		opts.imports = input;

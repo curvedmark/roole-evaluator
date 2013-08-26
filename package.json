@@ -33,8 +33,7 @@
     "natural-range": "1.x",
     "roole-error": "*",
     "roole-node": "*",
-    "roole-parser": "*",
-    "roole-builtin": "*"
+    "roole-parser": "*"
   },
   "devDependencies": {
     "mocha": "1.x",
