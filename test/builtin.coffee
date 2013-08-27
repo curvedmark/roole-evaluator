@@ -46,6 +46,61 @@ test "$len(value)", ->
 		}
 	'''
 
+test "$len(range)", ->
+	assert.compileTo '''
+		a {
+			content: $len(-1..1);
+		}
+	''', '''
+		a {
+			content: 3;
+		}
+	'''
+
+test "$len(reversed range)", ->
+	assert.compileTo '''
+		a {
+			content: $len(2..1);
+		}
+	''', '''
+		a {
+			content: 2;
+		}
+	'''
+
+test "$len(exclusive range)", ->
+	assert.compileTo '''
+		a {
+			content: $len(1...3);
+		}
+	''', '''
+		a {
+			content: 2;
+		}
+	'''
+
+test "$len(reversed exclusive range)", ->
+	assert.compileTo '''
+		a {
+			content: $len(-3...-1);
+		}
+	''', '''
+		a {
+			content: 2;
+		}
+	'''
+
+test "$len(empty range)", ->
+	assert.compileTo '''
+		a {
+			content: $len(0...0);
+		}
+	''', '''
+		a {
+			content: 0;
+		}
+	'''
+
 test "$len()", ->
 	assert.compileTo '''
 		a {
