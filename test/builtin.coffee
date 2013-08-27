@@ -52,6 +52,18 @@ test "$__dirname, url as path with compiled css at a different domain", ->
 		}
 	'''
 
+test "ignore mixin builtins", ->
+	assert.compileTo '''
+		body {
+			margin: 0;
+			@mixin $len();
+		}
+	''', '''
+		body {
+			margin: 0;
+		}
+	'''
+
 test "$len(list)", ->
 	assert.compileTo '''
 		a {
