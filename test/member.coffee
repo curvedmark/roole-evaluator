@@ -863,3 +863,17 @@ test "assign with variable", ->
 			content: a 2;
 		}
 	'''
+
+test "assign with range contained list", ->
+	assert.compileTo '''
+		$list = 0 1 2;
+		$ranges = [0..1];
+		$list[$ranges[0]] = a;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: a 2;
+		}
+	'''
