@@ -2,6 +2,56 @@ assert = require './assert'
 
 suite 'Builtin'
 
+test "$__dirname", ->
+	assert.compileTo {
+		'/tabs/index.roo': '''
+			li {
+				background: url("$__dirname/bg.png")
+			}
+		'''
+		'/index.roo': '''
+			@import './tabs';
+		'''
+	}, '''
+		li {
+			background: url("tabs/bg.png");
+		}
+	'''
+
+test "$__dirname, url as path", ->
+	assert.compileTo {
+		'http://example.com/tabs/index.roo': '''
+			li {
+				background: url("$__dirname/bg.png")
+			}
+		'''
+		'http://example.com/index.roo': '''
+			@import './tabs';
+		'''
+	}, '''
+		li {
+			background: url("tabs/bg.png");
+		}
+	'''
+
+test "$__dirname, url as path with compiled css at a different domain", ->
+	assert.compileTo {
+		out: 'http://google.com/'
+	}, {
+		'http://example.com/tabs/index.roo': '''
+			li {
+				background: url("$__dirname/bg.png")
+			}
+		'''
+		'http://example.com/index.roo': '''
+			@import './tabs';
+		'''
+	}, '''
+		li {
+			background: url("http://example.com/tabs/bg.png");
+		}
+	'''
+
 test "$len(list)", ->
 	assert.compileTo '''
 		a {
@@ -322,52 +372,90 @@ test "$opp(top dimension)", ->
 		}
 	'''
 
-test "$__dirname", ->
-	assert.compileTo {
-		'/tabs/index.roo': '''
-			li {
-				background: url("$__dirname/bg.png")
-			}
-		'''
-		'/index.roo': '''
-			@import './tabs';
-		'''
-	}, '''
-		li {
-			background: url("tabs/bg.png");
+test "$list()", ->
+	assert.compileTo '''
+		a {
+			content: $list();
+		}
+	''', '''
+		a {
+			content: [];
 		}
 	'''
 
-test "$__dirname, url as path", ->
-	assert.compileTo {
-		'http://example.com/tabs/index.roo': '''
-			li {
-				background: url("$__dirname/bg.png")
-			}
-		'''
-		'http://example.com/index.roo': '''
-			@import './tabs';
-		'''
-	}, '''
-		li {
-			background: url("tabs/bg.png");
+test "$list(list)", ->
+	assert.compileTo '''
+		a {
+			content: $list(1 2);
+		}
+	''', '''
+		a {
+			content: 1 2;
 		}
 	'''
 
-test "$__dirname, url as path with compiled css at a different domain", ->
-	assert.compileTo {
-		out: 'http://google.com/'
-	}, {
-		'http://example.com/tabs/index.roo': '''
-			li {
-				background: url("$__dirname/bg.png")
-			}
-		'''
-		'http://example.com/index.roo': '''
-			@import './tabs';
-		'''
-	}, '''
-		li {
-			background: url("http://example.com/tabs/bg.png");
+test "$list(range)", ->
+	assert.compileTo '''
+		a {
+			content: $list(1..3);
+		}
+	''', '''
+		a {
+			content: 1 2 3;
+		}
+	'''
+
+test "$list(value)", ->
+	assert.compileTo '''
+		a {
+			content: $list(1)[0];
+		}
+	''', '''
+		a {
+			content: 1;
+		}
+	'''
+
+test "$list(list, sep)", ->
+	assert.compileTo '''
+		a {
+			content: $list(1 2, ',');
+		}
+	''', '''
+		a {
+			content: 1, 2;
+		}
+	'''
+
+test "$list(range, sep)", ->
+	assert.compileTo '''
+		a {
+			content: $list(1..3, '/');
+		}
+	''', '''
+		a {
+			content: 1/2/3;
+		}
+	'''
+
+test "$list(val, sep)", ->
+	assert.compileTo '''
+		a {
+			content: $list(1, ' ');
+		}
+	''', '''
+		a {
+			content: 1;
+		}
+	'''
+
+test "$list(list, invalid sep)", ->
+	assert.compileTo '''
+		a {
+			content: $list([1, 2], '%');
+		}
+	''', '''
+		a {
+			content: 1, 2;
 		}
 	'''
