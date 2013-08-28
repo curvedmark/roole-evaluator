@@ -472,4 +472,48 @@ test "$list(list, invalid sep)", ->
 		}
 	'''
 
-test "$push"
+test "$push()", ->
+	assert.compileTo '''
+		a {
+			content: $push();
+		}
+	''', '''
+		a {
+			content: null;
+		}
+	'''
+
+test "$push(list)", ->
+	assert.compileTo '''
+		a {
+			content: $push(0 1);
+		}
+	''', '''
+		a {
+			content: 0 1;
+		}
+	'''
+
+test "$push(list) changes original", ->
+	assert.compileTo '''
+		$list = 0, 1;
+		$push($list, a);
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 0, 1, a;
+		}
+	'''
+
+test "$push(list, value, list)", ->
+	assert.compileTo '''
+		a {
+			content: $push([0, 1], a, [2 3]);
+		}
+	''', '''
+		a {
+			content: 0, 1, a, 2 3;
+		}
+	'''

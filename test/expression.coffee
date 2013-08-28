@@ -78,3 +78,23 @@ test "list containing range", ->
 			-foo: 3 2;
 		}
 	'''
+
+test "remove bare expression", ->
+	assert.compileTo '''
+		1 + 1;
+		body {
+			"string";
+			margin: 0;
+		}
+	''', '''
+		body {
+			margin: 0;
+		}
+	'''
+
+test "remove bare expression in @page", ->
+	assert.compileTo '''
+		@page {
+			"string";
+		}
+	''', ''
