@@ -624,3 +624,84 @@ test "$pop(empty list)", ->
 			content: null;
 		}
 	'''
+
+test "$pop(single-item list)", ->
+	assert.compileTo '''
+		$list = [0];
+		$item = $pop($list);
+		a {
+			content: $item;
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 0;
+			content: [];
+		}
+	'''
+
+test "$shift()", ->
+	assert.compileTo '''
+		a {
+			content: $shift();
+		}
+	''', '''
+		a {
+			content: null;
+		}
+	'''
+
+test "$shift(list)", ->
+	assert.compileTo '''
+		a {
+			content: $shift(0 1);
+		}
+	''', '''
+		a {
+			content: 0;
+		}
+	'''
+
+test "disallow $shift(non-list)", ->
+	assert.failAt '''
+		$shift(1);
+	''', { line: 1, column: 8 }
+
+test "$shift(list) changes list", ->
+	assert.compileTo '''
+		$list = 0, 1;
+		$shift($list);
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 1;
+		}
+	'''
+
+test "$shift(empty list)", ->
+	assert.compileTo '''
+		a {
+			content: $shift([]);
+		}
+	''', '''
+		a {
+			content: null;
+		}
+	'''
+
+test "$shift(single-item list)", ->
+	assert.compileTo '''
+		$list = [0];
+		$item = $shift($list);
+		a {
+			content: $item;
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 0;
+			content: [];
+		}
+	'''
