@@ -494,6 +494,11 @@ test "$push(list)", ->
 		}
 	'''
 
+test "disallow $push(non-list, value)", ->
+	assert.failAt '''
+		$push(1, 1);
+	''', { line: 1, column: 7 }
+
 test "$push(list, value) changes list", ->
 	assert.compileTo '''
 		$list = 0, 1;
@@ -540,6 +545,11 @@ test "$unshift(list)", ->
 		}
 	'''
 
+test "disallow $unshift(non-list, value)", ->
+	assert.failAt '''
+		$unshift(1, 1);
+	''', { line: 1, column: 10 }
+
 test "$unshift(list, value) changes list", ->
 	assert.compileTo '''
 		$list = 0, 1;
@@ -561,5 +571,56 @@ test "$unshift(list, value, list)", ->
 	''', '''
 		a {
 			content: a 2 3 0, 1;
+		}
+	'''
+
+test "$pop()", ->
+	assert.compileTo '''
+		a {
+			content: $pop();
+		}
+	''', '''
+		a {
+			content: null;
+		}
+	'''
+
+test "$pop(list)", ->
+	assert.compileTo '''
+		a {
+			content: $pop(0 1);
+		}
+	''', '''
+		a {
+			content: 1;
+		}
+	'''
+
+test "disallow $pop(non-list)", ->
+	assert.failAt '''
+		$pop(1);
+	''', { line: 1, column: 6 }
+
+test "$pop(list) changes list", ->
+	assert.compileTo '''
+		$list = 0, 1;
+		$pop($list);
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 0;
+		}
+	'''
+
+test "$pop(empty list)", ->
+	assert.compileTo '''
+		a {
+			content: $pop([]);
+		}
+	''', '''
+		a {
+			content: null;
 		}
 	'''
