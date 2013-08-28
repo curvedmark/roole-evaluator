@@ -564,7 +564,7 @@ test "assign to partially out-of-range items with range", ->
 		}
 	'''
 
-test "assign to item with empty exclusive range", ->
+test "assign to item with empty range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[2...2] = a;
@@ -577,7 +577,7 @@ test "assign to item with empty exclusive range", ->
 		}
 	'''
 
-test "assign to item with empty exclusive negative range", ->
+test "assign to item with empty negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-3...-3] = a;
@@ -590,7 +590,7 @@ test "assign to item with empty exclusive negative range", ->
 		}
 	'''
 
-test "assign to edge item with empty exclusive range", ->
+test "assign to edge item with empty range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[3...3] = a;
@@ -603,7 +603,7 @@ test "assign to edge item with empty exclusive range", ->
 		}
 	'''
 
-test "assign to edge item with empty exclusive negative range", ->
+test "assign to edge item with empty negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-4...-4] = a;
@@ -616,7 +616,7 @@ test "assign to edge item with empty exclusive negative range", ->
 		}
 	'''
 
-test "assign to out-of-range item with empty exclusive range", ->
+test "assign to out-of-range item with empty range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[4...4] = a;
@@ -629,7 +629,7 @@ test "assign to out-of-range item with empty exclusive range", ->
 		}
 	'''
 
-test "assign to out-of-range item with empty exclusive negative range", ->
+test "assign to out-of-range item with empty negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-5...-5] = a;
@@ -875,5 +875,122 @@ test "assign with range contained list", ->
 	''', '''
 		a {
 			content: a 2;
+		}
+	'''
+
+test "assign to mix-separated list with number", ->
+	assert.compileTo '''
+		$list = 0 1, 2;
+		$list[3] = a;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 0 1, 2, a;
+		}
+	'''
+
+test "assign to mix-separated list with negative number", ->
+	assert.compileTo '''
+		$list = 0, 1 2;
+		$list[-5] = a;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: a, null, 0, 1 2;
+		}
+	'''
+
+test "assign to single-item list with number", ->
+	assert.compileTo '''
+		$list = [0];
+		$list[1] = a;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 0 a;
+		}
+	'''
+
+test "assign to single-item list with negative number", ->
+	assert.compileTo '''
+		$list = [0];
+		$list[-3] = a;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: a null 0;
+		}
+	'''
+
+test "assign to single-item list with number using mix-separated list", ->
+	assert.compileTo '''
+		$list = [0];
+		$list[2] = a, b c;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 0, null, a, b c;
+		}
+	'''
+
+test "assign to single-item list with negative number using mix-separated list", ->
+	assert.compileTo '''
+		$list = [0];
+		$list[-2] = a b, c;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: a b, c, 0;
+		}
+	'''
+
+test "assign to mix-separated list with empty range", ->
+	assert.compileTo '''
+		$list = 0, 1 2;
+		$list[-4...-4] = a b;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: a b null 0, 1 2;
+		}
+	'''
+
+test "assign to nested mix-separated list with number", ->
+	assert.compileTo '''
+		$list = 0 [1, 2];
+		$list[2] = a;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 0 1, 2 a;
+		}
+	'''
+
+test "assign to nested mix-separated list with negative number", ->
+	assert.compileTo '''
+		$list = [[1, 2]];
+		$list[0...0] = a;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: a 1, 2;
 		}
 	'''

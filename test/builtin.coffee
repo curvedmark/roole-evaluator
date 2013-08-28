@@ -471,3 +471,5 @@ test "$list(list, invalid sep)", ->
 			content: 1, 2;
 		}
 	'''
+
+test "$push"
