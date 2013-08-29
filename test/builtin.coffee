@@ -2,56 +2,6 @@ assert = require './assert'
 
 suite 'Builtin'
 
-test "$__dirname", ->
-	assert.compileTo {
-		'/tabs/index.roo': '''
-			li {
-				background: url("$__dirname/bg.png")
-			}
-		'''
-		'/index.roo': '''
-			@import './tabs';
-		'''
-	}, '''
-		li {
-			background: url("tabs/bg.png");
-		}
-	'''
-
-test "$__dirname, url as path", ->
-	assert.compileTo {
-		'http://example.com/tabs/index.roo': '''
-			li {
-				background: url("$__dirname/bg.png")
-			}
-		'''
-		'http://example.com/index.roo': '''
-			@import './tabs';
-		'''
-	}, '''
-		li {
-			background: url("tabs/bg.png");
-		}
-	'''
-
-test "$__dirname, url as path with compiled css at a different domain", ->
-	assert.compileTo {
-		out: 'http://google.com/'
-	}, {
-		'http://example.com/tabs/index.roo': '''
-			li {
-				background: url("$__dirname/bg.png")
-			}
-		'''
-		'http://example.com/index.roo': '''
-			@import './tabs';
-		'''
-	}, '''
-		li {
-			background: url("http://example.com/tabs/bg.png");
-		}
-	'''
-
 test "ignore mixin builtins", ->
 	assert.compileTo '''
 		body {

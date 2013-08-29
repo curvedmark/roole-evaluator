@@ -290,22 +290,6 @@ test "disallow importing file that doesn't exist", ->
 		@import './base';
 	''', {line: 1, column: 1}
 
-test "url", ->
-	assert.compileTo {
-		'http://example.com/base.roo': '''
-			body {
-				margin: 0;
-			}
-		'''
-		'http://example.com/index.roo': '''
-			@import './base';
-		'''
-	}, '''
-		body {
-			margin: 0;
-		}
-	'''
-
 test "nest in ruleset", ->
 	assert.compileTo {
 		'/base.roo': '''
