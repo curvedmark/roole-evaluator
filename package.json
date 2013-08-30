@@ -33,6 +33,7 @@
     "natural-range": "1.x",
     "intersperse": "1.x",
     "path-extras": "1.x",
+    "floader": "1.x",
     "roole-error": "*",
     "roole-node": "*",
     "roole-parser": "*"
