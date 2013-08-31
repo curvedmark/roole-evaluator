@@ -153,3 +153,23 @@ test "absolute url in @import", ->
 
 		@import "/base.css";
 	'''
+
+test "variable as url", ->
+	assert.compileTo '''
+		$url = 'bg.png';
+		a {
+			content: url($url);
+		}
+	''', '''
+		a {
+			content: url('bg.png');
+		}
+	'''
+
+test "disallow invalid url value", ->
+	assert.failAt '''
+		$url = 0 1;
+		a {
+			content: url($url);
+		}
+	''', { line: 3, column: 15 }
