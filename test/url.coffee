@@ -26,6 +26,30 @@ test "relative url", ->
 		}
 	'''
 
+test "unquoted relative url", ->
+	assert.compileTo {
+		'/tabs/index.roo': '''
+			.tabs {
+				background: url(bg.png)
+			}
+		'''
+		'/index.roo': '''
+			@import './tabs';
+
+			body {
+				background: url(bg.png)
+			}
+		'''
+	}, '''
+		.tabs {
+			background: url(tabs/bg.png);
+		}
+
+		body {
+			background: url(bg.png);
+		}
+	'''
+
 test "absolute url", ->
 	assert.compileTo {
 		'/tabs/index.roo': '''
@@ -47,6 +71,30 @@ test "absolute url", ->
 
 		body {
 			background: url("/bg.png");
+		}
+	'''
+
+test "unquoted absolute url", ->
+	assert.compileTo {
+		'/tabs/index.roo': '''
+			.tabs {
+				background: url(/bg.png)
+			}
+		'''
+		'/index.roo': '''
+			@import './tabs';
+
+			body {
+				background: url(/bg.png)
+			}
+		'''
+	}, '''
+		.tabs {
+			background: url(/bg.png);
+		}
+
+		body {
+			background: url(/bg.png);
 		}
 	'''
 
