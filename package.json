@@ -36,7 +36,8 @@
     "floader": "1.x",
     "roole-error": "*",
     "roole-node": "*",
-    "roole-parser": "*"
+    "roole-parser": "*",
+    "roole-builtin": "*"
   },
   "devDependencies": {
     "mocha": "1.x",
