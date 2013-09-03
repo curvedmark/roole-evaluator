@@ -17,12 +17,7 @@ exports.compileTo = function (opts, input, css) {
 
 	if (typeof input !== 'string') {
 		opts.imports = input;
-		if (input['/index.roo']) {
-			input = input['/index.roo'];
-		} else if (input['http://example.com/index.roo']) {
-			input = input['http://example.com/index.roo'];
-			opts.filename = 'http://example.com/index.roo';
-		}
+		input = input['/index.roo'];
 	}
 
 	return new Promise().fulfill().then(function () {
