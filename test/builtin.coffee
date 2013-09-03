@@ -655,3 +655,32 @@ test "$shift(single-item list)", ->
 			content: [];
 		}
 	'''
+
+test "$img-size()", ->
+	assert.compileTo '''
+		a {
+			content: $img-size();
+		}
+	''', '''
+		a {
+			content: null;
+		}
+	'''
+
+test "$img-size(path)", ->
+	assert.compileTo """
+		a {
+			content: $img-size('#{__dirname}/img.gif');
+		}
+	""", '''
+		a {
+			content: 10px 5px;
+		}
+	'''
+
+test "$img-size(invalid path)", ->
+	assert.failAt '''
+		a {
+			content: $img-size('/');
+		}
+	''', { line: 2, column: 11 }
