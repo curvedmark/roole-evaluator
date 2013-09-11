@@ -1,5 +1,7 @@
 assert = require './assert'
 
+suite 'media'
+
 test "nest media containing property in ruleset", ->
 	assert.compileTo '''
 		body {

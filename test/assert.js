@@ -25,7 +25,6 @@ exports.compileTo = function (opts, input, css) {
 		return evaluator.evaluate(ast, opts);
 	}).then(function (ast) {
 		var output = compiler.compile(ast);
-		if (css) css += '\n';
 		assert.equal(output, css);
 	}, function (err) {
 		if (err.loc) {
