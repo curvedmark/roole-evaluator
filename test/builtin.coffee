@@ -484,6 +484,17 @@ test "$push(empty list, value)", ->
 		}
 	'''
 
+test "$push(empty list, value, list)", ->
+	assert.compileTo '''
+		a {
+			content: $push([], a, 1 2);
+		}
+	''', '''
+		a {
+			content: a 1 2;
+		}
+	'''
+
 test "$unshift()", ->
 	assert.compileTo '''
 		a {
@@ -532,6 +543,28 @@ test "$unshift(list, value, list)", ->
 	''', '''
 		a {
 			content: a 2 3 0, 1;
+		}
+	'''
+
+test "$unshift(empty list, value)", ->
+	assert.compileTo '''
+		a {
+			content: $unshift([], a);
+		}
+	''', '''
+		a {
+			content: a;
+		}
+	'''
+
+test "$unshift(empty list, list, value)", ->
+	assert.compileTo '''
+		a {
+			content: $unshift([], 1 2, a);
+		}
+	''', '''
+		a {
+			content: 1 2 a;
 		}
 	'''
 
