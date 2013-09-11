@@ -27,7 +27,7 @@ test "number / number, needs truncation", ->
 		}
 	''', '''
 		a {
-			content: 0.333;
+			content: 0.33333;
 		}
 	'''
 
