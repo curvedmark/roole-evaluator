@@ -1,5 +1,7 @@
 assert = require './assert'
 
+suite 'selector'
+
 test "flatten selector nested in selector", ->
 	assert.compileTo '''
 		body { div {} }
@@ -102,7 +104,7 @@ test "flatten & selector followed by identifier prepended with dash nested in se
 test "disallow & selector followed by identifier to result nested in invalid selector", ->
 	assert.failAt '''
 		[type=button] { &-item {} }
-	''', {line: 1, column: 17}
+	''', { line: 1, column: 17 }
 
 test "flatten selector containing & selector nested in selector", ->
 	assert.compileTo '''

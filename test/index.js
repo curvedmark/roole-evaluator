@@ -24,5 +24,6 @@ require('./for');
 require('./function');
 require('./module');
 require('./member');
+require('./unit');
 require('./scope');
 require('./builtin');

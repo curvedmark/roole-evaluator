@@ -55,8 +55,8 @@ exports.failAt = function (input, loc) {
 	}, function (err) {
 		if (!err.loc) throw err;
 
-		assert.strictEqual(err.loc.line, loc.line, "Failed at line " + err.loc.line + " instead of " + loc.line);
-		assert.strictEqual(err.loc.column, loc.column, "Failed at column " + err.loc.column + " instead of " + loc.column);
+		assert.strictEqual(err.loc.line, loc.line, "Failed at line " + err.loc.line + " instead of " + loc.line + ": " + err.toString());
+		assert.strictEqual(err.loc.column, loc.column, "Failed at column " + err.loc.column + " instead of " + loc.column + ": " + err.toString());
 		if (loc.filename) assert.strictEqual(err.loc.filename, loc.filename, "Failed in file " + err.loc.filename + " instead of " + loc.filename);
 	});
 };

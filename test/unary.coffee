@@ -4,97 +4,97 @@ suite 'unary'
 
 test "+number", ->
 	assert.compileTo '''
-		body {
-			-foo: +1;
+		a {
+			content: +1;
 		}
 	''', '''
-		body {
-			-foo: 1;
+		a {
+			content: 1;
 		}
 	'''
 
 test "+percentage", ->
 	assert.compileTo '''
-		body {
-			-foo: +1%;
+		a {
+			content: +1%;
 		}
 	''', '''
-		body {
-			-foo: 1%;
+		a {
+			content: 1%;
 		}
 	'''
 
 test "+dimension", ->
 	assert.compileTo '''
-		body {
-			-foo: +1px;
+		a {
+			content: +1px;
 		}
 	''', '''
-		body {
-			-foo: 1px;
+		a {
+			content: 1px;
 		}
 	'''
 
 test "+string, not allowed", ->
 	assert.failAt '''
-		body {
-			-foo: +'a';
+		a {
+			content: +'a';
 		}
-	''', {line: 2, column: 8}
+	''', { line: 2, column: 11 }
 
 test "-number", ->
 	assert.compileTo '''
-		body {
-			-foo: -1;
+		a {
+			content: -1;
 		}
 	''', '''
-		body {
-			-foo: -1;
+		a {
+			content: -1;
 		}
 	'''
 
 test "-percentage", ->
 	assert.compileTo '''
-		body {
-			-foo: -1%;
+		a {
+			content: -1%;
 		}
 	''', '''
-		body {
-			-foo: -1%;
+		a {
+			content: -1%;
 		}
 	'''
 
 test "-dimension", ->
 	assert.compileTo '''
-		body {
-			-foo: -1px;
+		a {
+			content: -1px;
 		}
 	''', '''
-		body {
-			-foo: -1px;
+		a {
+			content: -1px;
 		}
 	'''
 
 test "-variable, value is number", ->
 	assert.compileTo '''
 		$foo = 1px;
-		body {
-			-foo: -$foo;
+		a {
+			content: -$foo;
 		}
 	''', '''
-		body {
-			-foo: -1px;
+		a {
+			content: -1px;
 		}
 	'''
 
 test "-variable, value is identifier", ->
 	assert.compileTo '''
 		$foo = foo;
-		body {
-			-foo: -$foo;
+		a {
+			content: -$foo;
 		}
 	''', '''
-		body {
-			-foo: -foo;
+		a {
+			content: -foo;
 		}
 	'''
