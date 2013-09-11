@@ -2,7 +2,7 @@ assert = require './assert'
 
 suite 'member'
 
-test "access with number", ->
+test "access using number", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[2];
@@ -13,7 +13,7 @@ test "access with number", ->
 		}
 	'''
 
-test "access with negative number", ->
+test "access using negative number", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[-3];
@@ -24,7 +24,7 @@ test "access with negative number", ->
 		}
 	'''
 
-test "access with number, out of range", ->
+test "access out-of-range item using number", ->
 	assert.compileTo '''
 		a {
 			content: [0 1 2][3];
@@ -35,7 +35,7 @@ test "access with number, out of range", ->
 		}
 	'''
 
-test "access with negative number, out of range", ->
+test "access out-of-range item using negative number", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[-4];
@@ -46,7 +46,7 @@ test "access with negative number, out of range", ->
 		}
 	'''
 
-test "access value with number", ->
+test "access value using number", ->
 	assert.compileTo '''
 		a {
 			content: 1[0];
@@ -57,7 +57,7 @@ test "access value with number", ->
 		}
 	'''
 
-test "access value with negative number", ->
+test "access value using negative number", ->
 	assert.compileTo '''
 		a {
 			content: 1[-1];
@@ -68,7 +68,7 @@ test "access value with negative number", ->
 		}
 	'''
 
-test "access with range", ->
+test "access using range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[1..2];
@@ -79,7 +79,7 @@ test "access with range", ->
 		}
 	'''
 
-test "access with reversed range", ->
+test "access using reversed range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[2..1];
@@ -90,7 +90,7 @@ test "access with reversed range", ->
 		}
 	'''
 
-test "access with oversized range", ->
+test "access using oversized range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[1..3];
@@ -101,7 +101,7 @@ test "access with oversized range", ->
 		}
 	'''
 
-test "access with oversized reversed range", ->
+test "access using oversized reversed range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[3..1];
@@ -112,7 +112,7 @@ test "access with oversized reversed range", ->
 		}
 	'''
 
-test "access with one number range", ->
+test "access using one number range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[1..1][0];
@@ -123,7 +123,7 @@ test "access with one number range", ->
 		}
 	'''
 
-test "access with empty range", ->
+test "access using empty range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[1...1];
@@ -134,7 +134,7 @@ test "access with empty range", ->
 		}
 	'''
 
-test "access with single-item range from positive to negative", ->
+test "access using positive to negative single-item range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[1..-2];
@@ -145,7 +145,7 @@ test "access with single-item range from positive to negative", ->
 		}
 	'''
 
-test "access with single-item exclusive range", ->
+test "access using single-item exclusive range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[1...2];
@@ -156,7 +156,7 @@ test "access with single-item exclusive range", ->
 		}
 	'''
 
-test "access with single-item reversed exclusive range", ->
+test "access using single-item reversed exclusive range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[1...-3];
@@ -167,7 +167,7 @@ test "access with single-item reversed exclusive range", ->
 		}
 	'''
 
-test "access with out-of-range range", ->
+test "access using out-of-range range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[3..4];
@@ -178,7 +178,7 @@ test "access with out-of-range range", ->
 		}
 	'''
 
-test "access with out-of-range reversed range", ->
+test "access using out-of-range reversed range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[4..3];
@@ -189,7 +189,7 @@ test "access with out-of-range reversed range", ->
 		}
 	'''
 
-test "access with range, from negative to negative", ->
+test "access using negative range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[-2..-1];
@@ -200,7 +200,7 @@ test "access with range, from negative to negative", ->
 		}
 	'''
 
-test "access with range, from negative to positive", ->
+test "access using negative to positive range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[-2..2];
@@ -211,7 +211,7 @@ test "access with range, from negative to positive", ->
 		}
 	'''
 
-test "access with range, from positive to negative", ->
+test "access using positive to negative range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[1..-1];
@@ -222,7 +222,7 @@ test "access with range, from positive to negative", ->
 		}
 	'''
 
-test "access with reversed range, from negative to negative", ->
+test "access using reversed negative range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[-1..-2];
@@ -233,7 +233,7 @@ test "access with reversed range, from negative to negative", ->
 		}
 	'''
 
-test "access with reversed range, from negative to positive", ->
+test "access using reversed negative to positive range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[-1..1];
@@ -244,7 +244,7 @@ test "access with reversed range, from negative to positive", ->
 		}
 	'''
 
-test "access with reversed range, from positive to negative", ->
+test "access using reversed positive to negative range", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[2..-2];
@@ -255,7 +255,7 @@ test "access with reversed range, from positive to negative", ->
 		}
 	'''
 
-test "access with invalid type", ->
+test "access using invalid type", ->
 	assert.compileTo '''
 		a {
 			content: (0 1 2)[true];
@@ -273,7 +273,7 @@ test "disallow access null", ->
 		}
 	''', { line: 2, column: 11 }
 
-test "access range with number", ->
+test "access range using number", ->
 	assert.compileTo '''
 		a {
 			content: (1..3)[1];
@@ -290,7 +290,7 @@ test "access should change loc", ->
 		$var = $list[0] + px;
 	''', { line: 2, column: 8 }
 
-test "access range with range", ->
+test "access range using range", ->
 	assert.compileTo '''
 		a {
 			content: (1..4)[1..2];
@@ -301,7 +301,7 @@ test "access range with range", ->
 		}
 	'''
 
-test "access empty list with number", ->
+test "access empty list using number", ->
 	assert.compileTo '''
 		a {
 			content: [][0];
@@ -312,19 +312,31 @@ test "access empty list with number", ->
 		}
 	'''
 
-test "disallow assigning to non-list with member expression", ->
+test "disallow assigning to null", ->
 	assert.failAt '''
 		$list = null;
 		$list[0] = a;
 	''', { line: 2, column: 1 }
 
-test "disallow assigning to list with invalid member type", ->
+test "disallow assigning to non-list", ->
+	assert.failAt '''
+		$list = 0;
+		$list[1] = a;
+	''', { line: 2, column: 1 }
+
+test "disallow assigning to list using invalid type", ->
 	assert.failAt '''
 		$list = 0 1 2;
 		$list[null] = a;
 	''', { line: 2, column: 7 }
 
-test "assign with number", ->
+test "disallow assigning to range", ->
+	assert.failAt '''
+		$list = 1..3;
+		$list[1] = a;
+	''', { line: 2, column: 1 }
+
+test "assign using number", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[2] = a;
@@ -337,7 +349,7 @@ test "assign with number", ->
 		}
 	'''
 
-test "assign with negative number", ->
+test "assign using negative number", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-3] = a;
@@ -350,7 +362,7 @@ test "assign with negative number", ->
 		}
 	'''
 
-test "assign to edge item with number", ->
+test "assign to edge item using number", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[3] = a;
@@ -363,7 +375,7 @@ test "assign to edge item with number", ->
 		}
 	'''
 
-test "assign to edge item with negative number", ->
+test "assign to edge item using negative number", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-4] = a;
@@ -376,7 +388,7 @@ test "assign to edge item with negative number", ->
 		}
 	'''
 
-test "assign to out-fo-range item with number", ->
+test "assign to out-fo-range item using number", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[4] = a;
@@ -389,7 +401,7 @@ test "assign to out-fo-range item with number", ->
 		}
 	'''
 
-test "assign to out-of-range item with negative number", ->
+test "assign to out-of-range item using negative number", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-5] = a;
@@ -402,7 +414,7 @@ test "assign to out-of-range item with negative number", ->
 		}
 	'''
 
-test "assign using assignment operation to list with number", ->
+test "assign using assignment operation to list using number", ->
 	assert.compileTo '''
 		$list = 0 1;
 		$list[0] += 1;
@@ -415,13 +427,13 @@ test "assign using assignment operation to list with number", ->
 		}
 	'''
 
-test "disallow assign using unsupported assignment operation to list with number", ->
+test "disallow assigning using unsupported assignment operation", ->
 	assert.failAt '''
 		$list = 0% 1;
 		$list[0] += a;
 	''', { line: 2, column: 1 }
 
-test "assign with range", ->
+test "assign using range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[1..2] = a;
@@ -434,7 +446,7 @@ test "assign with range", ->
 		}
 	'''
 
-test "assign with negative range", ->
+test "assign using negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-3..-2] = a;
@@ -447,7 +459,7 @@ test "assign with negative range", ->
 		}
 	'''
 
-test "assign with reversed range", ->
+test "assign using reversed range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[1..0] = a b;
@@ -460,7 +472,7 @@ test "assign with reversed range", ->
 		}
 	'''
 
-test "assign to partially out-of-range items with range", ->
+test "assign using oversized range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[1..3] = a;
@@ -473,7 +485,7 @@ test "assign to partially out-of-range items with range", ->
 		}
 	'''
 
-test "assign to edge items with range", ->
+test "assign to edge items using range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[3..4] = a;
@@ -486,7 +498,7 @@ test "assign to edge items with range", ->
 		}
 	'''
 
-test "assign to edge items with negative range", ->
+test "assign to edge items using negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-5..-4] = a;
@@ -499,7 +511,7 @@ test "assign to edge items with negative range", ->
 		}
 	'''
 
-test "assign to out-of-range items with range", ->
+test "assign to out-of-range items using range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[4..5] = a;
@@ -512,7 +524,7 @@ test "assign to out-of-range items with range", ->
 		}
 	'''
 
-test "assign to out-of-range items with reversed range", ->
+test "assign to out-of-range items using reversed range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[5..4] = a b c;
@@ -525,7 +537,7 @@ test "assign to out-of-range items with reversed range", ->
 		}
 	'''
 
-test "assign to out-of-range items with negative range", ->
+test "assign to out-of-range items using negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-6..-5] = a;
@@ -538,7 +550,7 @@ test "assign to out-of-range items with negative range", ->
 		}
 	'''
 
-test "assign to out-of-range items with reversed negative range", ->
+test "assign to out-of-range items using reversed negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-5..-6] = a b;
@@ -551,7 +563,7 @@ test "assign to out-of-range items with reversed negative range", ->
 		}
 	'''
 
-test "assign to partially out-of-range items with range", ->
+test "assign to partially out-of-range items using range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-4..-2] = a;
@@ -564,7 +576,7 @@ test "assign to partially out-of-range items with range", ->
 		}
 	'''
 
-test "assign to item with empty range", ->
+test "assign to item using empty range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[2...2] = a;
@@ -577,7 +589,7 @@ test "assign to item with empty range", ->
 		}
 	'''
 
-test "assign to item with empty negative range", ->
+test "assign to item using empty negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-3...-3] = a;
@@ -590,7 +602,7 @@ test "assign to item with empty negative range", ->
 		}
 	'''
 
-test "assign to edge item with empty range", ->
+test "assign to edge item using empty range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[3...3] = a;
@@ -603,7 +615,7 @@ test "assign to edge item with empty range", ->
 		}
 	'''
 
-test "assign to edge item with empty negative range", ->
+test "assign to edge item using empty negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-4...-4] = a;
@@ -616,7 +628,7 @@ test "assign to edge item with empty negative range", ->
 		}
 	'''
 
-test "assign to out-of-range item with empty range", ->
+test "assign to out-of-range item using empty range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[4...4] = a;
@@ -629,7 +641,7 @@ test "assign to out-of-range item with empty range", ->
 		}
 	'''
 
-test "assign to out-of-range item with empty negative range", ->
+test "assign to out-of-range item using empty negative range", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$list[-5...-5] = a;
@@ -642,8 +654,7 @@ test "assign to out-of-range item with empty negative range", ->
 		}
 	'''
 
-
-test "assign to item in single-item list with number", ->
+test "assign to item in single-item list using number", ->
 	assert.compileTo '''
 		$list = [0];
 		$list[0] = a;
@@ -656,7 +667,7 @@ test "assign to item in single-item list with number", ->
 		}
 	'''
 
-test "assign to edge item in single-item list with number", ->
+test "assign to edge item in single-item list using number", ->
 	assert.compileTo '''
 		$list = [0];
 		$list[1] = a;
@@ -695,7 +706,7 @@ test "assign to out-of-range item in single-item list using list", ->
 		}
 	'''
 
-test "assign to edge item single-item list with negative number using list", ->
+test "assign to edge item single-item list using negative number with list", ->
 	assert.compileTo '''
 		$list = [0];
 		$list[-2] = 1, 2;
@@ -708,7 +719,7 @@ test "assign to edge item single-item list with negative number using list", ->
 		}
 	'''
 
-test "assign to out-of-range item in single-item list with negative number using list", ->
+test "assign to out-of-range item in single-item list using negative number with list", ->
 	assert.compileTo '''
 		$list = [0];
 		$list[-3] = 1, 2;
@@ -721,7 +732,7 @@ test "assign to out-of-range item in single-item list with negative number using
 		}
 	'''
 
-test "assign to empty list with number", ->
+test "assign to edge item in empty list using number", ->
 	assert.compileTo '''
 		$list = [];
 		$list[0] = a;
@@ -734,7 +745,7 @@ test "assign to empty list with number", ->
 		}
 	'''
 
-test "assign to empty list with negative number", ->
+test "assign to edge item in empty list using negative number", ->
 	assert.compileTo '''
 		$list = [];
 		$list[-1] = a;
@@ -747,7 +758,7 @@ test "assign to empty list with negative number", ->
 		}
 	'''
 
-test "assign to out-fo-range item in empty list with number", ->
+test "assign to out-fo-range item in empty list using number", ->
 	assert.compileTo '''
 		$list = [];
 		$list[1] = a;
@@ -760,7 +771,20 @@ test "assign to out-fo-range item in empty list with number", ->
 		}
 	'''
 
-test "assign to empty list with empty range", ->
+test "assign to out-fo-range item in empty list using negative number", ->
+	assert.compileTo '''
+		$list = [];
+		$list[-2] = a;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: a null;
+		}
+	'''
+
+test "assign to edge item in empty list using empty range", ->
 	assert.compileTo '''
 		$list = [];
 		$list[0...0] = a;
@@ -773,7 +797,7 @@ test "assign to empty list with empty range", ->
 		}
 	'''
 
-test "assign to out-fo-range item in empty list with empty range", ->
+test "assign to out-fo-range item in empty list using empty range", ->
 	assert.compileTo '''
 		$list = [];
 		$list[1...1] = a;
@@ -786,13 +810,7 @@ test "assign to out-fo-range item in empty list with empty range", ->
 		}
 	'''
 
-test "disallow assigning to value with member expression", ->
-	assert.failAt '''
-		$list = 0;
-		$list[1] = a;
-	''', { line: 2, column: 1 }
-
-test "ignore assignment operation if assign to out-fo-range item with number", ->
+test "ignore assignment operation if assign to out-fo-range item using number", ->
 	assert.compileTo '''
 		$list = [];
 		$list[0] += a;
@@ -805,7 +823,7 @@ test "ignore assignment operation if assign to out-fo-range item with number", -
 		}
 	'''
 
-test "ignore assignment operation if assign to out-fo-range item with negative number", ->
+test "ignore assignment operation if assign to out-fo-range item using negative number", ->
 	assert.compileTo '''
 		$list = [];
 		$list[-2] /= a;
@@ -818,7 +836,7 @@ test "ignore assignment operation if assign to out-fo-range item with negative n
 		}
 	'''
 
-test "ignore assignment operation if assign with empty", ->
+test "ignore assignment operation if assign using empty range", ->
 	assert.compileTo '''
 		$list = [0];
 		$list[0...0] %= a;
@@ -844,12 +862,6 @@ test "assign using multiple member expressions", ->
 		}
 	'''
 
-test "disallow assigning to range", ->
-	assert.failAt '''
-		$list = 1..3;
-		$list[1] = a;
-	''', { line: 2, column: 1 }
-
 test "assign with variable", ->
 	assert.compileTo '''
 		$list = 0 1 2;
@@ -864,7 +876,7 @@ test "assign with variable", ->
 		}
 	'''
 
-test "assign with range contained list", ->
+test "assign with range contained in a list", ->
 	assert.compileTo '''
 		$list = 0 1 2;
 		$ranges = [0..1];
@@ -878,7 +890,7 @@ test "assign with range contained list", ->
 		}
 	'''
 
-test "assign to mix-separated list with number", ->
+test "assign to mix-separated list using number", ->
 	assert.compileTo '''
 		$list = 0 1, 2;
 		$list[3] = a;
@@ -891,7 +903,7 @@ test "assign to mix-separated list with number", ->
 		}
 	'''
 
-test "assign to mix-separated list with negative number", ->
+test "assign to mix-separated list using negative number", ->
 	assert.compileTo '''
 		$list = 0, 1 2;
 		$list[-5] = a;
@@ -904,7 +916,7 @@ test "assign to mix-separated list with negative number", ->
 		}
 	'''
 
-test "assign to single-item list with number", ->
+test "assign to single-item list using number", ->
 	assert.compileTo '''
 		$list = [0];
 		$list[1] = a;
@@ -917,7 +929,7 @@ test "assign to single-item list with number", ->
 		}
 	'''
 
-test "assign to single-item list with negative number", ->
+test "assign to single-item list using negative number", ->
 	assert.compileTo '''
 		$list = [0];
 		$list[-3] = a;
@@ -930,7 +942,7 @@ test "assign to single-item list with negative number", ->
 		}
 	'''
 
-test "assign to single-item list with number using mix-separated list", ->
+test "assign to single-item list using number with mix-separated list", ->
 	assert.compileTo '''
 		$list = [0];
 		$list[2] = a, b c;
@@ -956,7 +968,7 @@ test "assign to single-item list with negative number using mix-separated list",
 		}
 	'''
 
-test "assign to mix-separated list with empty range", ->
+test "assign to mix-separated list using empty range", ->
 	assert.compileTo '''
 		$list = 0, 1 2;
 		$list[-4...-4] = a b;
@@ -969,7 +981,7 @@ test "assign to mix-separated list with empty range", ->
 		}
 	'''
 
-test "assign to nested mix-separated list with number", ->
+test "assign to nested mix-separated list using number", ->
 	assert.compileTo '''
 		$list = 0 [1, 2];
 		$list[2] = a;
@@ -982,7 +994,7 @@ test "assign to nested mix-separated list with number", ->
 		}
 	'''
 
-test "assign to nested mix-separated list with negative number", ->
+test "assign to nested mix-separated list using negative number", ->
 	assert.compileTo '''
 		$list = [[1, 2]];
 		$list[0...0] = a;
@@ -992,5 +1004,83 @@ test "assign to nested mix-separated list with negative number", ->
 	''', '''
 		a {
 			content: a 1, 2;
+		}
+	'''
+
+test "assign with empty list", ->
+	assert.compileTo '''
+		$list = [1 2 3];
+		$list[1] = [];
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 1 3;
+		}
+	'''
+
+test "assign to start item with empty list", ->
+	assert.compileTo '''
+		$list = [1 2 3];
+		$list[0] = [];
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 2 3;
+		}
+	'''
+
+test "assign to end item with empty list", ->
+	assert.compileTo '''
+		$list = [1 2 3];
+		$list[2] = [];
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 1 2;
+		}
+	'''
+
+test "assign to out-fo-range item with empty list", ->
+	assert.compileTo '''
+		$list = [1 2];
+		$list[2] = [];
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 1 2;
+		}
+	'''
+
+test "assign to out-fo-range item using negative number with empty list", ->
+	assert.compileTo '''
+		$list = [1 2];
+		$list[-3] = [];
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 1 2;
+		}
+	'''
+
+test "assign using empty range with empty list", ->
+	assert.compileTo '''
+		$list = [1 2];
+		$list[1...1] = [];
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 1 2;
 		}
 	'''

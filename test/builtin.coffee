@@ -473,6 +473,17 @@ test "$push(list, value, list)", ->
 		}
 	'''
 
+test "$push(empty list, value)", ->
+	assert.compileTo '''
+		a {
+			content: $push([], a);
+		}
+	''', '''
+		a {
+			content: a;
+		}
+	'''
+
 test "$unshift()", ->
 	assert.compileTo '''
 		a {
