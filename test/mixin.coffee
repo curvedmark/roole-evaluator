@@ -93,7 +93,7 @@ test "mixin rulesets multiple times", ->
 		}
 	'''
 
-test "mixin ruleset nested in media", ->
+test "ignore ruleset nested in media", ->
 	assert.compileTo '''
 		@media screen {
 			.btn {
@@ -103,6 +103,25 @@ test "mixin ruleset nested in media", ->
 
 		.submit {
 			@mixin .btn;
+		}
+	''', '''
+		@media screen {
+			.btn {
+				display: inline-block;
+			}
+		}
+	'''
+
+test "mixin ruleset nested in media", ->
+	assert.compileTo '''
+		@media screen {
+			.btn {
+				display: inline-block;
+			}
+		}
+
+		.submit {
+			@mixin .btn / screen;
 		}
 	''', '''
 		@media screen {
