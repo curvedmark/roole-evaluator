@@ -267,25 +267,6 @@ test "do not modify arguments by direct assignment", ->
 		}
 	'''
 
-test "function called within a mixin", ->
-	assert.compileTo '''
-		$bar = @function {
-			@return 80px;
-		};
-
-		$foo = @function {
-		  width: $bar();
-		};
-
-		a {
-			@mixin $foo();
-		}
-	''', '''
-		a {
-			width: 80px;
-		}
-	'''
-
 test "lexical scope", ->
 	assert.compileTo '''
 		$var = 1;

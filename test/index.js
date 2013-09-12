@@ -22,6 +22,7 @@ require('./url');
 require('./if');
 require('./for');
 require('./function');
+require('./mixin');
 require('./module');
 require('./member');
 require('./unit');
