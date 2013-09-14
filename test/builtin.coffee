@@ -113,6 +113,28 @@ test "$len(empty range)", ->
 		}
 	'''
 
+test "$len(string)", ->
+	assert.compileTo '''
+		a {
+			content: $len('abc');
+		}
+	''', '''
+		a {
+			content: 3;
+		}
+	'''
+
+test "$len(empty string)", ->
+	assert.compileTo '''
+		a {
+			content: $len('abc');
+		}
+	''', '''
+		a {
+			content: 3;
+		}
+	'''
+
 test "$len()", ->
 	assert.compileTo '''
 		a {
