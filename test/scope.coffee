@@ -42,7 +42,7 @@ test "@import does not create new scope", ->
 		'/index.roo': '''
 			$width = 980px;
 
-			@import './base';
+			@import './base.roo';
 
 			body {
 				width: $width;
@@ -63,7 +63,7 @@ test "importing file expose variables", ->
 		'''
 		'/index.roo': '''
 			$width = 980px;
-			@import './base';
+			@import './base.roo';
 		'''
 	}, '''
 		body {

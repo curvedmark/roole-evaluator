@@ -18,6 +18,30 @@ test "relative url", ->
 		'''
 	}, '''
 		.tabs {
+			background: url("bg.png");
+		}
+
+		body {
+			background: url("bg.png");
+		}
+	'''
+
+test "prefixed relative url", ->
+	assert.compileTo {
+		'/tabs/index.roo': '''
+			.tabs {
+				background: url("./bg.png")
+			}
+		'''
+		'/index.roo': '''
+			@import './tabs';
+
+			body {
+				background: url("./bg.png")
+			}
+		'''
+	}, '''
+		.tabs {
 			background: url("tabs/bg.png");
 		}
 
@@ -42,7 +66,31 @@ test "unquoted relative url", ->
 		'''
 	}, '''
 		.tabs {
-			background: url(tabs/bg.png);
+			background: url(bg.png);
+		}
+
+		body {
+			background: url(bg.png);
+		}
+	'''
+
+test "prefixed unquoted relative url", ->
+	assert.compileTo {
+		'/tabs/index.roo': '''
+			.tabs {
+				background: url(../bg.png)
+			}
+		'''
+		'/index.roo': '''
+			@import './tabs';
+
+			body {
+				background: url(./bg.png)
+			}
+		'''
+	}, '''
+		.tabs {
+			background: url(bg.png);
 		}
 
 		body {
@@ -126,6 +174,22 @@ test "relative url in @import", ->
 	assert.compileTo {
 		'/tabs/index.roo': '''
 			@import "tabs.css";
+		'''
+		'/index.roo': '''
+			@import './tabs';
+
+			@import "base.css";
+		'''
+	}, '''
+		@import "tabs.css";
+
+		@import "base.css";
+	'''
+
+test "prefixed relative url in @import", ->
+	assert.compileTo {
+		'/tabs/index.roo': '''
+			@import "./tabs.css";
 		'''
 		'/index.roo': '''
 			@import './tabs';

@@ -23,7 +23,8 @@ var promise = evaluator.evaluate(ast, [options]);
 ```
 
 * `ast` - Roole AST
-* `promise` - A promise whose fulfilling value is the CSS AST
-* `options` - An object literal supporting these options:
+* `promise` - a promise whose fulfilling value is the CSS AST
+* `options` - an object literal supporting these options:
+	* `base` - an absolute path to which relative urls not starting with `./` or `../` are resolved.
+	* `out` - (default: `base`) absolute path of the directory where the compiled CSS will be written to. Used to translate relative urls.
 	* `imports` (default: `{}`) - An object literal containing files to be imported, keys are file paths, values are the contents. When a imported file matches a file path, the content will be used directly, and no external request is generated.
-	* `out` - Absolute path of the directory where the compiled CSS will be written to. Used to determine the value of `$__dirname` etc.

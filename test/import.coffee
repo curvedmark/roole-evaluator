@@ -10,7 +10,7 @@ test "path", ->
 			}
 		'''
 		'/index.roo': '''
-			@import './base';
+			@import './base.roo';
 		'''
 	}, '''
 		body {
@@ -61,14 +61,14 @@ test "recursively import", ->
 			}
 		'''
 		'/button.roo': '''
-			@import './reset';
+			@import './reset.roo';
 
 			.button {
 				display: inline-block;
 			}
 		'''
 		'/index.roo': '''
-			@import './button';
+			@import './button.roo';
 		'''
 	}, '''
 		body {
@@ -88,22 +88,22 @@ test "import same file multiple times", ->
 			}
 		'''
 		'/button.roo': '''
-			@import './reset';
+			@import './reset.roo';
 
 			.button {
 				display: inline-block;
 			}
 		'''
 		'/tabs.roo': '''
-			@import './reset';
+			@import './reset.roo';
 
 			.tabs {
 				overflow: hidden;
 			}
 		'''
 		'/index.roo': '''
-			@import './button';
-			@import './tabs';
+			@import './button.roo';
+			@import './tabs.roo';
 		'''
 	}, '''
 		body {
@@ -127,14 +127,14 @@ test "recursively import files of the same directory", ->
 			}
 		'''
 		'/tabs/index.roo': '''
-			@import './tab';
+			@import './tab.roo';
 
 			.tabs {
 				overflow: hidden;
 			}
 		'''
 		'/index.roo': '''
-			@import './tabs/index';
+			@import './tabs/index.roo';
 		'''
 	}, '''
 		.tab {
@@ -154,14 +154,14 @@ test "recursively import files of different directories", ->
 			}
 		'''
 		'/tabs/index.roo': '''
-			@import '../reset';
+			@import '../reset.roo';
 
 			.tabs {
 				overflow: hidden;
 			}
 		'''
 		'/index.roo': '''
-			@import './tabs/index';
+			@import './tabs/index.roo';
 		'''
 	}, '''
 		body {
@@ -210,6 +210,27 @@ test "import file specified in package.json when importing a directory", ->
 	}, '''
 		.tab {
 			float: left;
+		}
+	'''
+
+test "force importing a directory when path ends with /", ->
+	assert.compileTo {
+		'/tabs.roo/index.roo': '''
+			.tabs {
+				overflow: hidden;
+			}
+		'''
+		'/tabs.roo': '''
+			.tabs {
+				overflow: auto;
+			}
+		'''
+		'/index.roo': '''
+			@import './tabs.roo/';
+		'''
+	}, '''
+		.tabs {
+			overflow: hidden;
 		}
 	'''
 
@@ -264,7 +285,7 @@ test "importing file with variables in the path", ->
 			}
 		'''
 		'/index.roo': '''
-			$path = './tabs';
+			$path = './tabs.roo';
 			@import $path;
 		'''
 	}, '''
@@ -281,7 +302,7 @@ test "disallow importing file with syntax error", ->
 			}
 		'''
 		'/index.roo': '''
-			@import './base';
+			@import './base.roo';
 		'''
 	}, {line: 1, column: 7, filename: '/base.roo'}
 
@@ -299,7 +320,7 @@ test "nest in ruleset", ->
 		'''
 		'/index.roo': '''
 			html {
-				@import './base';
+				@import './base.roo';
 			}
 		'''
 	}, '''
@@ -317,7 +338,7 @@ test "nest in @void", ->
 		'''
 		'/index.roo': '''
 			@void {
-				@import './base';
+				@import './base.roo';
 			}
 		'''
 	}, ''

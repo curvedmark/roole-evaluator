@@ -13,7 +13,7 @@ exports.compileTo = function (opts, input, css) {
 	}
 
 	if (!opts.filename) opts.filename = '/index.roo';
-	if (!opts.out) opts.out = '/';
+	if (!opts.base) opts.base = '/';
 
 	if (typeof input !== 'string') {
 		opts.imports = input;
@@ -39,7 +39,7 @@ exports.compileTo = function (opts, input, css) {
 exports.failAt = function (input, loc) {
 	var opts = {
 		filename: '/index.roo',
-		out: '/'
+		base: '/'
 	};
 
 	if (typeof input !== 'string') {
