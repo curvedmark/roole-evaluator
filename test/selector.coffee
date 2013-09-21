@@ -82,6 +82,22 @@ test "flatten & selector nested in selector", ->
 		body {}
 	'''
 
+test "flatten selector containing & selector nested in selector list", ->
+	assert.compileTo '''
+		body, div { & p {} }
+	''', '''
+		body p,
+		div p {}
+	'''
+
+test "flatten selector list containing & selector nested in selector", ->
+	assert.compileTo '''
+		body div { &, img {} }
+	''', '''
+		body div,
+		body div img {}
+	'''
+
 test 'disallow top-level & selector', ->
 	assert.failAt '''
 		& {}
@@ -111,12 +127,4 @@ test "flatten selector containing & selector nested in selector", ->
 		body { html & {} }
 	''', '''
 		html body {}
-	'''
-
-test "flatten selector list containing & selector nested in selector", ->
-	assert.compileTo '''
-		body div { &, img {} }
-	''', '''
-		body div,
-		body div img {}
 	'''
