@@ -734,6 +734,32 @@ test "$img-size()", ->
 	'''
 
 test "$img-size(path)", ->
+	assert.compileTo {
+		filename: __filename
+	}, '''
+		a {
+			content: $img-size('./img.gif');
+		}
+	''', '''
+		a {
+			content: 10px 5px;
+		}
+	'''
+
+test "$img-size(prefixed path)", ->
+	assert.compileTo {
+		base: __dirname
+	}, '''
+		a {
+			content: $img-size('img.gif');
+		}
+	''', '''
+		a {
+			content: 10px 5px;
+		}
+	'''
+
+test "$img-size(absolute path)", ->
 	assert.compileTo """
 		a {
 			content: $img-size('#{__dirname}/img.gif');
