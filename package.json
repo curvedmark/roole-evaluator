@@ -34,15 +34,15 @@
     "intersperse": "1.x",
     "path-br": "1.x",
     "floader": "1.x",
-    "roole-error": "*",
-    "roole-node": "*",
-    "roole-parser": "*",
-    "roole-builtin": "*"
+    "roole-error": "0.1.x",
+    "roole-node": "0.5.x",
+    "roole-parser": "0.11.x",
+    "roole-builtin": "0.4.x"
   },
   "devDependencies": {
     "mocha": "1.x",
     "mocha-as-promised": "1.x",
-    "roole-compiler": "*",
+    "roole-compiler": "0.5.x",
     "coffee-script": "1.x"
   }
 }
