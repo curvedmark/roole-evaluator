@@ -6,7 +6,7 @@ test "ruleset creates new scope", ->
 	assert.compileTo '''
 		$width = 980px;
 		body {
-			$width = 500px;
+			$width := 500px;
 		}
 		html {
 			width: $width;
@@ -22,7 +22,7 @@ test "@media creates new scope", ->
 		$width = 980px;
 
 		@media screen {
-			$width = 500px;
+			$width := 500px;
 		}
 
 		body {
@@ -37,7 +37,7 @@ test "@media creates new scope", ->
 test "@import does not create new scope", ->
 	assert.compileTo {
 		'/base.roo': '''
-			$width = 500px;
+			$width := 500px;
 		'''
 		'/index.roo': '''
 			$width = 980px;
@@ -76,7 +76,7 @@ test "@void creates new scope", ->
 		$width = 100px;
 
 		@void {
-			$width = 50px;
+			$width := 50px;
 		}
 
 		body {
@@ -93,7 +93,7 @@ test "@block creates new scope", ->
 		$width = 980px;
 
 		@block {
-			$width = 500px;
+			$width := 500px;
 		}
 
 		body {
@@ -105,12 +105,12 @@ test "@block creates new scope", ->
 		}
 	'''
 
-test "@if does not create new scope", ->
+test "@if creates new scope", ->
 	assert.compileTo '''
 		$width = 980px;
 
 		@if true {
-			$width = 500px;
+			$width := 500px;
 		}
 
 		body {
@@ -118,16 +118,16 @@ test "@if does not create new scope", ->
 		}
 	''', '''
 		body {
-			width: 500px;
+			width: 980px;
 		}
 	'''
 
-test "@for does not create new scope", ->
+test "@for creates new scope", ->
 	assert.compileTo '''
 		$width = 980px;
 
 		@for $i in 1 {
-			$width = 500px;
+			$width := 500px;
 		}
 
 		body {
@@ -135,7 +135,7 @@ test "@for does not create new scope", ->
 		}
 	''', '''
 		body {
-			width: 500px;
+			width: 980px;
 		}
 	'''
 
@@ -144,10 +144,10 @@ test "@keyframes creates new scope", ->
 		$width = 980px;
 
 		@-webkit-keyframes name {
-			$width = 400px;
+			$width := 400px;
 
 			from {
-				$width = 200px;
+				$width := 200px;
 			}
 			to {
 				width: $width;
@@ -174,7 +174,7 @@ test "@module creates new scope", ->
 		$width = 980px;
 
 		@module foo {
-			$width = 500px;
+			$width := 500px;
 		}
 
 		body {
@@ -191,7 +191,7 @@ test "@page creates new scope", ->
 		$width = 980px;
 
 		@page {
-			$width = 500px;
+			$width := 500px;
 		}
 
 		body {
@@ -208,7 +208,7 @@ test "@font-face creates new scope", ->
 		$width = 980px;
 
 		@font-face {
-			$width = 500px;
+			$width := 500px;
 		}
 
 		body {

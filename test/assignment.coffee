@@ -15,6 +15,48 @@ test "variables are case-sensitive", ->
 		}
 	'''
 
+test "overwrite variables in out scope", ->
+	assert.compileTo '''
+		$width = 960px;
+		body {
+			$width = 900px;
+			width: $width;
+		}
+
+		html {
+			width: $width;
+		}
+	''', '''
+		body {
+			width: 900px;
+		}
+
+		html {
+			width: 900px;
+		}
+	'''
+
+test ":=", ->
+	assert.compileTo '''
+		$width = 960px;
+		body {
+			$width := 900px;
+			width: $width;
+		}
+
+		html {
+			width: $width;
+		}
+	''', '''
+		body {
+			width: 900px;
+		}
+
+		html {
+			width: 960px;
+		}
+	'''
+
 test "?= after =", ->
 	assert.compileTo '''
 		$width = 960px;

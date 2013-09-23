@@ -427,6 +427,19 @@ test "assign using assignment operation to list using number", ->
 		}
 	'''
 
+test "assign using := to list using number", ->
+	assert.compileTo '''
+		$list = 0 1;
+		$list[0] := 1;
+		a {
+			content: $list;
+		}
+	''', '''
+		a {
+			content: 1 1;
+		}
+	'''
+
 test "disallow assigning using unsupported assignment operation", ->
 	assert.failAt '''
 		$list = 0% 1;
