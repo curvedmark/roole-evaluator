@@ -342,26 +342,3 @@ test "nest in @void", ->
 			}
 		'''
 	}, ''
-
-test "import js file", ->
-	assert.compileTo {
-		'/two.js': '''
-			exports.two = {
-				type: 'builtin',
-				children: [function () {
-					return { type: 'number', children: [2] }
-				}]
-			};
-		'''
-		'/index.roo': '''
-			@import './two.js';
-
-			a {
-				content: $two();
-			}
-		'''
-	}, '''
-		a {
-			content: 2;
-		}
-	'''
