@@ -173,7 +173,7 @@ test "@module creates new scope", ->
 	assert.compileTo '''
 		$width = 980px;
 
-		@module foo {
+		@module .foo {
 			$width := 500px;
 		}
 

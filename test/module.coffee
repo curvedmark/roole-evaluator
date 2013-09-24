@@ -4,7 +4,7 @@ suite '@module'
 
 test "default separator", ->
 	assert.compileTo '''
-		@module foo {
+		@module .foo {
 			.button {}
 		}
 	''', '''
@@ -13,16 +13,66 @@ test "default separator", ->
 
 test "specify separator", ->
 	assert.compileTo '''
-		@module foo with '--' {
+		@module .foo with '--' {
 			.button {}
 		}
 	''', '''
 		.foo--button {}
 	'''
 
+test "nest properties directly", ->
+	assert.compileTo '''
+		@module .foo {
+			width: 100px;
+
+			.button {}
+		}
+	''', '''
+		.foo {
+			width: 100px;
+		}
+			.foo-button {}
+	'''
+
+test "nest medias directly", ->
+	assert.compileTo '''
+		@module .foo {
+			@media screen {
+				width: 100px;
+			}
+
+			.button {}
+		}
+	''', '''
+		@media screen {
+			.foo {
+				width: 100px;
+			}
+		}
+
+		.foo-button {}
+	'''
+
+test "nest under ruleset", ->
+	assert.compileTo '''
+		body {
+			@module .foo {
+				width: 100px;
+
+				.button {}
+			}
+		}
+	''', '''
+		body .foo {
+			width: 100px;
+		}
+			body .foo-button {}
+	'''
+
+
 test "nested selectors", ->
 	assert.compileTo '''
-		@module foo {
+		@module .foo {
 			.tabs .tab {}
 		}
 	''', '''
@@ -31,7 +81,7 @@ test "nested selectors", ->
 
 test "chained selectors", ->
 	assert.compileTo '''
-		@module foo {
+		@module .foo {
 			.button.active {}
 		}
 	''', '''
@@ -40,8 +90,8 @@ test "chained selectors", ->
 
 test "nested modules", ->
 	assert.compileTo '''
-		@module foo {
-			@module bar {
+		@module .foo {
+			@module .bar {
 				.button {}
 			}
 		}
@@ -49,18 +99,57 @@ test "nested modules", ->
 		.foo-bar-button {}
 	'''
 
-test "not allow invalid module name", ->
+test "disallow invalid module name", ->
 	assert.failAt '''
-		$func = @function {};
-		@module $func {
+		$sel = foo;
+		@module $sel {
 			.button {}
 		}
-	''', {line: 2, column: 9}
+	''', { line: 2, column: 9 }
 
-test "not allow invalid module separator", ->
+test "disallow invalid module separator", ->
 	assert.failAt '''
 		$func = @function {};
-		@module foo with $func {
+		@module .foo with $func {
 			.button {}
 		}
-	''', {line: 2, column: 18}
+	''', { line: 2, column: 19 }
+
+test "selector interpolation as module name", ->
+	assert.compileTo '''
+		$sel = '.foo';
+		@module $sel {
+			width: 100px;
+		}
+	''', '''
+		.foo {
+			width: 100px;
+		}
+	'''
+
+test "disallow interpolated complex selector as module name", ->
+	assert.failAt '''
+		$sel = '.foo .bar';
+		@module $sel {
+			width: 100px;
+		}
+	''', { line: 2, column: 9 }
+
+test "extend module", ->
+	assert.compileTo '''
+		@module .foo {
+			width: 100px;
+
+			.button {}
+		}
+
+		.bar {
+			@extend .foo;
+		}
+	''', '''
+		.foo,
+		.bar {
+			width: 100px;
+		}
+			.foo-button {}
+	'''
