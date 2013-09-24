@@ -76,23 +76,44 @@ test 'string interpolating braced variable', ->
 test 'string interpolating escaped braced variable', ->
 	assert.compileTo '''
 		figcaption {
-			content: "Figure {\\$chapter}-12";
+			content: "Figure \\{\\$chapter}-12";
 		}
 	''', '''
 		figcaption {
-			content: "Figure {\\$chapter}-12";
+			content: "Figure \\{\\$chapter}-12";
 		}
 	'''
 
 test 'string interpolating braced identifier', ->
 	assert.compileTo '''
-		$chapter = 4;
 		figcaption {
 			content: "Figure {chapter}-12";
 		}
 	''', '''
 		figcaption {
-			content: "Figure {chapter}-12";
+			content: "Figure chapter-12";
+		}
+	'''
+
+test 'string interpolating addition', ->
+	assert.compileTo '''
+		figcaption {
+			content: "Figure { 5 + 1 }-12";
+		}
+	''', '''
+		figcaption {
+			content: "Figure 6-12";
+		}
+	'''
+
+test 'string interpolating string', ->
+	assert.compileTo '''
+		figcaption {
+			content: "Figure { "#6" }-12";
+		}
+	''', '''
+		figcaption {
+			content: "Figure #6-12";
 		}
 	'''
 
@@ -142,7 +163,7 @@ test 'not allow interpolating function', ->
 		.icon-$name {
 			float: left;
 		}
-	''', {line: 6, column: 7}
+	''', { line: 6, column: 7 }
 
 test 'identifier interpolating multiple variables', ->
 	assert.compileTo '''
@@ -238,13 +259,13 @@ test 'disallow selector interpolating invalid selector', ->
 	assert.failAt '''
 		$sel = '#';
 		$sel {}
-	''', {line: 2, column: 1}
+	''', { line: 2, column: 1 }
 
 test 'disallow selector interpolating top-level & selector', ->
 	assert.failAt '''
 		$sel = '&';
 		$sel {}
-	''', {line: 2, column: 1}
+	''', { line: 2, column: 1 }
 
 test 'complex selector interpolating selector', ->
 	assert.compileTo '''
@@ -278,7 +299,7 @@ test 'disallow complex selector interpolating top-level & selector', ->
 		body $sel {
 			width: auto;
 		}
-	''', {line: 2, column: 6}
+	''', { line: 2, column: 6 }
 
 test 'complex selector interpolating & selector nested in selector', ->
 	assert.compileTo '''
@@ -299,7 +320,7 @@ test 'disallow selector interpolating selector list', ->
 	assert.failAt '''
 		$sel = 'div, p';
 		$sel {}
-	''', {line: 2, column: 1}
+	''', { line: 2, column: 1 }
 
 test 'selector interpolating identifier', ->
 	assert.compileTo '''
@@ -399,4 +420,4 @@ test 'disallow media query interpolating invalid media query', ->
 		@media $qry {
 			body {}
 		}
-	''', {line: 2, column: 8}
+	''', { line: 2, column: 8 }
