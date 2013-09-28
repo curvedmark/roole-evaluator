@@ -153,3 +153,69 @@ test "extend module", ->
 		}
 			.foo-button {}
 	'''
+
+test "extend nested in module", ->
+	assert.compileTo '''
+		.bar {
+			width: 100px
+		}
+
+		@module .foo {
+			@extend .bar;
+		}
+	''', '''
+		.bar,
+		.foo {
+			width: 100px;
+		}
+	'''
+
+test "extend nested in module", ->
+	assert.compileTo {
+		'/bar.roo': '''
+			@void {
+				.bar {
+					width: 100px
+				}
+			}
+
+			baz {
+				@extend .bar;
+			}
+		'''
+		'/index.roo': '''
+			@import './bar.roo';
+			@module .foo {
+				display: block;
+				@extend .bar;
+			}
+		'''
+	}, '''
+		baz,
+		.foo {
+			width: 100px;
+		}
+
+		.foo {
+			display: block;
+		}
+	'''
+
+test "mixin nested in module", ->
+	assert.compileTo '''
+		.bar {
+			width: 100px
+		}
+
+		@module .foo {
+			@mixin .bar;
+		}
+	''', '''
+		.bar {
+			width: 100px;
+		}
+
+		.foo {
+			width: 100px;
+		}
+	'''
