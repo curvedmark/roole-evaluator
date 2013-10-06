@@ -37,7 +37,7 @@
     "roole-error": "0.1.x",
     "roole-node": "0.5.x",
     "roole-parser": "0.12.x",
-    "roole-builtin": "0.4.x"
+    "roole-builtin": "0.5.x"
   },
   "devDependencies": {
     "mocha": "1.x",

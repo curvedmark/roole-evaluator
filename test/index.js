@@ -28,3 +28,4 @@ require('./member');
 require('./unit');
 require('./scope');
 require('./builtin');
+require('./global');

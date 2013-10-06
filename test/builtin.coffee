@@ -175,7 +175,7 @@ test "$unit(dimension)", ->
 		}
 	''', '''
 		a {
-			content: "px";
+			content: px;
 		}
 	'''
 
