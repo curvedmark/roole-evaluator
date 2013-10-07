@@ -275,7 +275,7 @@ test "lexical scope", ->
 		};
 
 		a {
-		  $var := 2;
+		  $var = 2;
 		  content: $func();
 		}
 	''', '''

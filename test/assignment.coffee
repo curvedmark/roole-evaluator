@@ -32,7 +32,7 @@ test "overwrite variables in out scope", ->
 		}
 
 		html {
-			width: 900px;
+			width: 960px;
 		}
 	'''
 
@@ -53,7 +53,7 @@ test ":=", ->
 		}
 
 		html {
-			width: 960px;
+			width: 900px;
 		}
 	'''
 
@@ -91,6 +91,27 @@ test "+=", ->
 		}
 	''', '''
 		body {
+			width: 580px;
+		}
+	'''
+
+test "+= overwrites variables in out scope", ->
+	assert.compileTo '''
+		$width = 480px;
+		body {
+			$width += 100px;
+			width: $width;
+		}
+
+		html {
+			width: $width;
+		}
+	''', '''
+		body {
+			width: 580px;
+		}
+
+		html {
 			width: 580px;
 		}
 	'''
