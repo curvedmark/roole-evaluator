@@ -245,14 +245,19 @@ test 'identifier interpolating braced variable preceded by a dash', ->
 test 'selector interpolating string', ->
 	assert.compileTo '''
 		$sel = ' .button ';
-		$sel {}
+		$sel { padding: 0 }
 
 		#submit {
-			@extend .button;
+			@mixin .button;
 		}
 	''', '''
-		.button,
-		#submit {}
+		.button {
+			padding: 0;
+		}
+
+		#submit {
+			padding: 0;
+		}
 	'''
 
 test 'disallow selector interpolating invalid selector', ->
@@ -270,27 +275,37 @@ test 'disallow selector interpolating top-level & selector', ->
 test 'complex selector interpolating selector', ->
 	assert.compileTo '''
 		$sel = '.icon ';
-		.button $sel {}
+		.button $sel { padding: 0 }
 
 		#submit .icon {
-			@extend .button .icon
+			padding: 0;
 		}
 	''', '''
-		.button .icon,
-		#submit .icon {}
+		.button .icon {
+			padding: 0;
+		}
+
+		#submit .icon {
+			padding: 0;
+		}
 	'''
 
 test 'complex selector interpolating selector staring with combinator', ->
 	assert.compileTo '''
 		$sel = ' >  .icon';
-		.button $sel {}
+		.button $sel { padding: 0 }
 
 		#submit .icon {
-			@extend .button > .icon
+			@mixin .button > .icon
 		}
 	''', '''
-		.button > .icon,
-		#submit .icon {}
+		.button > .icon {
+			padding: 0;
+		}
+
+		#submit .icon {
+			padding: 0;
+		}
 	'''
 
 test 'disallow complex selector interpolating top-level & selector', ->
@@ -305,15 +320,20 @@ test 'complex selector interpolating & selector nested in selector', ->
 	assert.compileTo '''
 		$sel = '& .icon';
 		.ie {
-			.button $sel {}
+			.button $sel { padding: 0 }
 		}
 
 		#submit .icon {
-			@extend .button .ie .icon;
+			@mixin .button .ie .icon;
 		}
 	''', '''
-		.button .ie .icon,
-		#submit .icon {}
+		.button .ie .icon {
+			padding: 0;
+		}
+
+		#submit .icon {
+			padding: 0;
+		}
 	'''
 
 test 'disallow selector interpolating selector list', ->
@@ -325,92 +345,18 @@ test 'disallow selector interpolating selector list', ->
 test 'selector interpolating identifier', ->
 	assert.compileTo '''
 		$sel = button;
-		$sel {}
+		$sel { padding: 0 }
 
 		#submit {
-			@extend button;
+			@mixin button;
 		}
 	''', '''
-		button,
-		#submit {}
-	'''
-
-test 'media type interpolating string', ->
-	assert.compileTo '''
-		$qry = 'not  screen';
-		@media $qry {
-			.button {}
+		button {
+			padding: 0;
 		}
 
-		@media not screen {
-			#submit {
-				@extend .button;
-			}
-		}
-	''', '''
-		@media not screen {
-			.button,
-			#submit {}
-		}
-	'''
-
-test 'media query interpolating string', ->
-	assert.compileTo '''
-		$qry = '( max-width: 980px )';
-		@media screen and $qry {
-			.button {}
-		}
-
-		@media screen and (max-width: 980px) {
-			#submit {
-				@extend .button;
-			}
-		}
-	''', '''
-		@media screen and (max-width: 980px) {
-			.button,
-			#submit {}
-		}
-	'''
-
-test 'media query list interpolating string', ->
-	assert.compileTo '''
-		$qry1 = ' only screen  and (color) ';
-		$qry2 = '(monochrome)';
-		@media $qry1, $qry2 {
-			.button {}
-		}
-
-		@media only screen and (color), (monochrome) {
-			#submit {
-				@extend .button;
-			}
-		}
-	''', '''
-		@media
-		only screen and (color),
-		(monochrome) {
-			.button,
-			#submit {}
-		}
-	'''
-
-test 'media query interpolating identifier', ->
-	assert.compileTo '''
-		$qry = screen;
-		@media $qry {
-			.button {}
-		}
-
-		@media screen {
-			#submit {
-				@extend .button;
-			}
-		}
-	''', '''
-		@media screen {
-			.button,
-			#submit {}
+		#submit {
+			padding: 0;
 		}
 	'''
 

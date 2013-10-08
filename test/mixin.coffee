@@ -112,29 +112,6 @@ test "ignore ruleset nested in media", ->
 		}
 	'''
 
-test "mixin ruleset nested in media", ->
-	assert.compileTo '''
-		@media screen {
-			.btn {
-				display: inline-block;
-			}
-		}
-
-		.submit {
-			@mixin .btn / screen;
-		}
-	''', '''
-		@media screen {
-			.btn {
-				display: inline-block;
-			}
-		}
-
-		.submit {
-			display: inline-block;
-		}
-	'''
-
 test "in-media mixin", ->
 	assert.compileTo '''
 		.btn {

@@ -169,23 +169,6 @@ test "@keyframes creates new scope", ->
 		}
 	'''
 
-test "@module creates new scope", ->
-	assert.compileTo '''
-		$width = 980px;
-
-		@module .foo {
-			$width = 500px;
-		}
-
-		body {
-			width: $width;
-		}
-	''', '''
-		body {
-			width: 980px;
-		}
-	'''
-
 test "@page creates new scope", ->
 	assert.compileTo '''
 		$width = 980px;
