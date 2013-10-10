@@ -36,7 +36,7 @@
     "floader": "1.x",
     "roole-error": "0.1.x",
     "roole-node": "0.5.x",
-    "roole-parser": "0.12.x",
+    "roole-parser": "0.13.x",
     "roole-builtin": "0.5.x"
   },
   "devDependencies": {
