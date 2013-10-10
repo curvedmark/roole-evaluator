@@ -313,8 +313,7 @@ test 'selector interpolating selector list', ->
 		$sel = ' button , .btn';
 		$sel {}
 	''', '''
-		button,
-		.btn {}
+		button, .btn {}
 	'''
 
 test 'selector list interpolating selector list', ->
@@ -322,9 +321,7 @@ test 'selector list interpolating selector list', ->
 		$sel = ' .btn,button';
 		.button, $sel {}
 	''', '''
-		.button,
-		.btn,
-		button {}
+		.button, .btn, button {}
 	'''
 
 test 'media type interpolating string', ->
@@ -349,9 +346,7 @@ test 'media query list interpolating string', ->
 		$mq2 = '(monochrome)';
 		@media $mq1, $mq2 {}
 	''', '''
-		@media
-		only screen and (color),
-		(monochrome) {}
+		@media only screen and (color), (monochrome) {}
 	'''
 
 test 'media query interpolating identifier', ->
@@ -379,9 +374,7 @@ test 'media query interpolating media query list', ->
 		$mq = '(color), (monochrome)';
 		@media $mq {}
 	''', '''
-		@media
-		(color),
-		(monochrome) {}
+		@media (color), (monochrome) {}
 	'''
 
 test 'media query list interpolating media query list', ->
@@ -389,8 +382,5 @@ test 'media query list interpolating media query list', ->
 		$mq = '(color), (monochrome)';
 		@media screen, $mq {}
 	''', '''
-		@media
-		screen,
-		(color),
-		(monochrome) {}
+		@media screen, (color), (monochrome) {}
 	'''

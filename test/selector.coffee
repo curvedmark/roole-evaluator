@@ -16,34 +16,28 @@ test "flatten compound selectors nested in selector list", ->
 			span:hover {}
 		}
 	''', '''
-		body a:hover,
-		body span:hover {}
+		body a:hover, body span:hover {}
 	'''
 
 test "flatten selector nested in selector list", ->
 	assert.compileTo '''
 		html, body { div {} }
 	''', '''
-		html div,
-		body div {}
+		html div, body div {}
 	'''
 
 test "flatten selector nested in selector list", ->
 	assert.compileTo '''
 		body { div, p {} }
 	''', '''
-		body div,
-		body p {}
+		body div, body p {}
 	'''
 
 test "flatten selector list nested in selector list", ->
 	assert.compileTo '''
 		html, body { div, p {} }
 	''', '''
-		html div,
-		html p,
-		body div,
-		body p {}
+		html div, html p, body div, body p {}
 	'''
 
 test "flatten deeply nested selector", ->
@@ -69,10 +63,7 @@ test "flatten selector list containing selector starting with combinator nested 
 	assert.compileTo '''
 		body, div { > p, img {} }
 	''', '''
-		body > p,
-		body img,
-		div > p,
-		div img {}
+		body > p, body img, div > p, div img {}
 	'''
 
 test "flatten & selector nested in selector", ->
@@ -86,16 +77,14 @@ test "flatten selector containing & selector nested in selector list", ->
 	assert.compileTo '''
 		body, div { & p {} }
 	''', '''
-		body p,
-		div p {}
+		body p, div p {}
 	'''
 
 test "flatten selector list containing & selector nested in selector", ->
 	assert.compileTo '''
 		body div { &, img {} }
 	''', '''
-		body div,
-		body div img {}
+		body div, body div img {}
 	'''
 
 test 'disallow top-level & selector', ->
