@@ -36,6 +36,25 @@ test "mixin ruleset", ->
 		}
 	'''
 
+test "mixin later ruleset", ->
+	assert.compileTo '''
+		.submit {
+			@mixin .btn;
+		}
+
+		.btn {
+			display: inline-block;
+		}
+	''', '''
+		.submit {
+			display: inline-block;
+		}
+
+		.btn {
+			display: inline-block;
+		}
+	'''
+
 test "mixin rulesets with selector list", ->
 	assert.compileTo '''
 		.btn {
@@ -151,5 +170,53 @@ test "function called within a mixin", ->
 	''', '''
 		a {
 			width: 80px;
+		}
+	'''
+
+test "mixin ruleset from another file", ->
+	assert.compileTo {
+		'/btn.roo': '''
+			.btn {
+				display: inline-block;
+			}
+		'''
+		'/index.roo': '''
+			@import './btn.roo';
+
+			.submit {
+				@mixin .btn;
+			}
+		'''
+	}, '''
+		.btn {
+			display: inline-block;
+		}
+
+		.submit {
+			display: inline-block;
+		}
+	'''
+
+test "mixin ruleset from later file", ->
+	assert.compileTo {
+		'/btn.roo': '''
+			.btn {
+				display: inline-block;
+			}
+		'''
+		'/index.roo': '''
+			.submit {
+				@mixin .btn;
+			}
+
+			@import './btn.roo';
+		'''
+	}, '''
+		.submit {
+			display: inline-block;
+		}
+
+		.btn {
+			display: inline-block;
 		}
 	'''
