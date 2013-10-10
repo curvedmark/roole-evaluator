@@ -245,19 +245,9 @@ test 'identifier interpolating braced variable preceded by a dash', ->
 test 'selector interpolating string', ->
 	assert.compileTo '''
 		$sel = ' .button ';
-		$sel { padding: 0 }
-
-		#submit {
-			@mixin .button;
-		}
+		$sel {}
 	''', '''
-		.button {
-			padding: 0;
-		}
-
-		#submit {
-			padding: 0;
-		}
+		.button {}
 	'''
 
 test 'disallow selector interpolating invalid selector', ->
@@ -274,96 +264,133 @@ test 'disallow selector interpolating top-level & selector', ->
 
 test 'complex selector interpolating selector', ->
 	assert.compileTo '''
-		$sel = '.icon ';
-		.button $sel { padding: 0 }
-
-		#submit .icon {
-			padding: 0;
-		}
+		$sel = ' .icon ';
+		.button $sel {}
 	''', '''
-		.button .icon {
-			padding: 0;
-		}
-
-		#submit .icon {
-			padding: 0;
-		}
+		.button .icon {}
 	'''
 
 test 'complex selector interpolating selector staring with combinator', ->
 	assert.compileTo '''
 		$sel = ' >  .icon';
-		.button $sel { padding: 0 }
-
-		#submit .icon {
-			@mixin .button > .icon
-		}
+		.button $sel {}
 	''', '''
-		.button > .icon {
-			padding: 0;
-		}
-
-		#submit .icon {
-			padding: 0;
-		}
+		.button > .icon {}
 	'''
 
 test 'disallow complex selector interpolating top-level & selector', ->
 	assert.failAt '''
 		$sel = '& div';
-		body $sel {
-			width: auto;
-		}
+		body $sel {}
 	''', { line: 2, column: 6 }
 
 test 'complex selector interpolating & selector nested in selector', ->
 	assert.compileTo '''
-		$sel = '& .icon';
+		$sel = ' & .icon ';
 		.ie {
-			.button $sel { padding: 0 }
-		}
-
-		#submit .icon {
-			@mixin .button .ie .icon;
+			.button $sel {}
 		}
 	''', '''
-		.button .ie .icon {
-			padding: 0;
-		}
-
-		#submit .icon {
-			padding: 0;
-		}
+		.button .ie .icon {}
 	'''
-
-test 'disallow selector interpolating selector list', ->
-	assert.failAt '''
-		$sel = 'div, p';
-		$sel {}
-	''', { line: 2, column: 1 }
 
 test 'selector interpolating identifier', ->
 	assert.compileTo '''
 		$sel = button;
-		$sel { padding: 0 }
-
-		#submit {
-			@mixin button;
-		}
+		$sel {}
 	''', '''
-		button {
-			padding: 0;
-		}
+		button {}
+	'''
 
-		#submit {
-			padding: 0;
-		}
+test 'disallow complex selector interpolating selector list', ->
+	assert.failAt '''
+		$sel = 'div, p';
+		body $sel {}
+	''', { line: 2, column: 6 }
+
+test 'selector interpolating selector list', ->
+	assert.compileTo '''
+		$sel = ' button , .btn';
+		$sel {}
+	''', '''
+		button,
+		.btn {}
+	'''
+
+test 'selector list interpolating selector list', ->
+	assert.compileTo '''
+		$sel = ' .btn,button';
+		.button, $sel {}
+	''', '''
+		.button,
+		.btn,
+		button {}
+	'''
+
+test 'media type interpolating string', ->
+	assert.compileTo '''
+		$mq = 'not  screen';
+		@media $mq {}
+	''', '''
+		@media not screen {}
+	'''
+
+test 'media query interpolating string', ->
+	assert.compileTo '''
+		$mq = '( max-width: 980px )';
+		@media screen and $mq {}
+	''', '''
+		@media screen and (max-width: 980px) {}
+	'''
+
+test 'media query list interpolating string', ->
+	assert.compileTo '''
+		$mq1 = ' only screen  and (color) ';
+		$mq2 = '(monochrome)';
+		@media $mq1, $mq2 {}
+	''', '''
+		@media
+		only screen and (color),
+		(monochrome) {}
+	'''
+
+test 'media query interpolating identifier', ->
+	assert.compileTo '''
+		$mq = screen;
+		@media $mq {}
+	''', '''
+		@media screen {}
 	'''
 
 test 'disallow media query interpolating invalid media query', ->
 	assert.failAt '''
-		$qry = 'screen #';
-		@media $qry {
-			body {}
-		}
+		$mq = 'screen #';
+		@media $mq {}
 	''', { line: 2, column: 8 }
+
+test 'disallow complex media query interpolating media query list', ->
+	assert.failAt '''
+		$mq = '(color), (monochrome)';
+		@media screen and $mq {}
+	''', { line: 2, column: 19 }
+
+test 'media query interpolating media query list', ->
+	assert.compileTo '''
+		$mq = '(color), (monochrome)';
+		@media $mq {}
+	''', '''
+		@media
+		(color),
+		(monochrome) {}
+	'''
+
+test 'media query list interpolating media query list', ->
+	assert.compileTo '''
+		$mq = '(color), (monochrome)';
+		@media screen, $mq {}
+	''', '''
+		@media
+		screen,
+		(color),
+		(monochrome) {}
+	'''
