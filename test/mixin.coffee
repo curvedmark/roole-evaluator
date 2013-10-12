@@ -96,6 +96,19 @@ test "disallow circular mixin", ->
 		}
 	''', { line: 6, column: 2 }
 
+test "disallow indirect circular mixin", ->
+	assert.failAt '''
+		.action {
+			.submit {
+				@mixin .btn;
+			}
+		}
+
+		.btn {
+			@mixin .action;
+		}
+	''', { line: 8, column: 2 }
+
 test "mixin rulesets with selector list", ->
 	assert.compileTo '''
 		.btn {
