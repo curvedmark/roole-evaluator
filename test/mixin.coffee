@@ -36,6 +36,35 @@ test "mixin ruleset", ->
 		}
 	'''
 
+test "mixin ruleset contain child rulset", ->
+	assert.compileTo '''
+		.btn {
+			display: inline-block;
+
+			&:hover {
+				padding: 0;
+			}
+		}
+
+		.submit {
+			@mixin .btn;
+		}
+	''', '''
+		.btn {
+			display: inline-block;
+		}
+			.btn:hover {
+				padding: 0;
+			}
+
+		.submit {
+			display: inline-block;
+		}
+			.submit:hover {
+				padding: 0;
+			}
+	'''
+
 test "mixin later ruleset", ->
 	assert.compileTo '''
 		.submit {
