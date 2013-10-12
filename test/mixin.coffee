@@ -55,6 +55,47 @@ test "mixin later ruleset", ->
 		}
 	'''
 
+test "mixin later ruleset containing another mixin", ->
+	assert.compileTo '''
+		.submit {
+			@mixin .btn-large;
+		}
+
+		.btn {
+			display: inline-block;
+		}
+
+		.btn-large {
+			@mixin .btn;
+			padding: 20px;
+		}
+	''', '''
+		.submit {
+			display: inline-block;
+			padding: 20px;
+		}
+
+		.btn {
+			display: inline-block;
+		}
+
+		.btn-large {
+			display: inline-block;
+			padding: 20px;
+		}
+	'''
+
+test "disallow circular mixin", ->
+	assert.failAt '''
+		.submit {
+			@mixin .btn;
+		}
+
+		.btn {
+			@mixin .submit;
+		}
+	''', { line: 6, column: 2 }
+
 test "mixin rulesets with selector list", ->
 	assert.compileTo '''
 		.btn {
