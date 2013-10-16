@@ -189,6 +189,22 @@ test "import index.roo when importing a directory", ->
 		}
 	'''
 
+test "import directory when base is not the parent of current file", ->
+	assert.compileTo { base: '/baz' }, {
+		'/foo/bar/index.roo': '''
+			.tabs {
+				overflow: hidden;
+			}
+		'''
+		'/index.roo': '''
+			@import './foo/bar';
+		'''
+	}, '''
+		.tabs {
+			overflow: hidden;
+		}
+	'''
+
 test "import file specified in package.json when importing a directory", ->
 	assert.compileTo {
 		'/tabs/index.roo': '''
