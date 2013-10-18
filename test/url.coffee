@@ -237,3 +237,14 @@ test "disallow invalid url value", ->
 			content: url($url);
 		}
 	''', { line: 3, column: 15 }
+
+test "disable url translation when base option is missing", ->
+	assert.compileTo { base: '' }, '''
+		a {
+			content: url(img.png);
+		}
+	''', '''
+		a {
+			content: url(img.png);
+		}
+	'''
