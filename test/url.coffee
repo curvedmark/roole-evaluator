@@ -170,54 +170,6 @@ test "url starting with protocol", ->
 		}
 	'''
 
-test "relative url in @import", ->
-	assert.compileTo {
-		'/tabs/index.roo': '''
-			@import "tabs.css";
-		'''
-		'/index.roo': '''
-			@import './tabs';
-
-			@import "base.css";
-		'''
-	}, '''
-		@import "tabs.css";
-
-		@import "base.css";
-	'''
-
-test "prefixed relative url in @import", ->
-	assert.compileTo {
-		'/tabs/index.roo': '''
-			@import "./tabs.css";
-		'''
-		'/index.roo': '''
-			@import './tabs';
-
-			@import "base.css";
-		'''
-	}, '''
-		@import "tabs/tabs.css";
-
-		@import "base.css";
-	'''
-
-test "absolute url in @import", ->
-	assert.compileTo {
-		'/tabs/index.roo': '''
-			@import "/tabs.css";
-		'''
-		'/index.roo': '''
-			@import './tabs';
-
-			@import "/base.css";
-		'''
-	}, '''
-		@import "/tabs.css";
-
-		@import "/base.css";
-	'''
-
 test "variable as url", ->
 	assert.compileTo '''
 		$url = 'bg.png';

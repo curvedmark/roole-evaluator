@@ -26,10 +26,53 @@ test "url string starting with protocol", ->
 	'''
 
 test "url string ending with .css", ->
-	assert.compileTo '''
-		@import 'tabs.css';
-	''', '''
-		@import 'tabs.css';
+	assert.compileTo {
+		'/tabs.css': '''
+			.tabs {
+				content: "$tabs";
+			}
+		'''
+		'/index.roo': '''
+			@import 'tabs.css';
+		'''
+	}, '''
+		.tabs {
+			content: "$tabs";
+		}
+	'''
+
+test "url string containing media query", ->
+	assert.compileTo {
+		'/base.roo': '''
+			body { margin: 0 }
+		'''
+		'/index.roo': '''
+			@import './base.roo' screen;
+		'''
+	}, '''
+		@media screen {
+			body {
+				margin: 0;
+			}
+		}
+	'''
+
+test "url string ending with .css containing media query list", ->
+	assert.compileTo {
+		'/tabs.css': '''
+			.tabs {
+				content: "$tabs";
+			}
+		'''
+		'/index.roo': '''
+			@import './tabs.css' screen, print;
+		'''
+	}, '''
+		@media screen, print {
+			.tabs {
+				content: "$tabs";
+			}
+		}
 	'''
 
 test "url using url()", ->
@@ -37,20 +80,6 @@ test "url using url()", ->
 		@import url(base);
 	''', '''
 		@import url(base);
-	'''
-
-test "contain media query", ->
-	assert.compileTo '''
-		@import 'base' screen;
-	''', '''
-		@import 'base' screen;
-	'''
-
-test "contain media query list", ->
-	assert.compileTo '''
-		@import 'base' screen, print;
-	''', '''
-		@import 'base' screen, print;
 	'''
 
 test "recursively import", ->
