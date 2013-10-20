@@ -313,7 +313,8 @@ test 'selector interpolating selector list', ->
 		$sel = ' button , .btn';
 		$sel {}
 	''', '''
-		button, .btn {}
+		button,
+		.btn {}
 	'''
 
 test 'selector list interpolating selector list', ->
@@ -321,7 +322,9 @@ test 'selector list interpolating selector list', ->
 		$sel = ' .btn,button';
 		.button, $sel {}
 	''', '''
-		.button, .btn, button {}
+		.button,
+		.btn,
+		button {}
 	'''
 
 test 'media type interpolating string', ->

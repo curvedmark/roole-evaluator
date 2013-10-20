@@ -42,7 +42,7 @@
   "devDependencies": {
     "mocha": "1.x",
     "mocha-as-promised": "1.x",
-    "roole-compiler": "0.5.x",
+    "roole-compiler": "0.6.x",
     "coffee-script": "1.x"
   }
 }
