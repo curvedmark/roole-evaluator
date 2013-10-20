@@ -58,7 +58,7 @@ test "call function multiple times", ->
 		a {
 			$value = 960px;
 			$get-value = @function {
-			  @return $value;
+				@return $value;
 			};
 
 			width: $get-value();
@@ -271,12 +271,12 @@ test "lexical scope", ->
 	assert.compileTo '''
 		$var = 1;
 		$func = @function {
-		  @return $var;
+			@return $var;
 		};
 
 		a {
-		  $var = 2;
-		  content: $func();
+			$var = 2;
+			content: $func();
 		}
 	''', '''
 		a {
