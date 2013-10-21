@@ -15,6 +15,24 @@ test "calc() with variables", ->
 		}
 	'''
 
+test "call identifier", ->
+	assert.compileTo '''
+		$name = couter;
+		a {
+			content: $name();
+		}
+	''', '''
+		a {
+			content: couter();
+		}
+	'''
+
+
+test "disallow non-function call", ->
+	assert.failAt '''
+		'calc'();
+	''', { line: 1, column: 1 }
+
 test "no params", ->
 	assert.compileTo '''
 		$width = @function {
