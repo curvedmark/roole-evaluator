@@ -8,7 +8,7 @@ It eliminates constructs that cannot exist in CSS (e.g., `@if`, `@for`, variable
 
 ```javascript
 var parser = require('roole-parser');
-var evaluator = require('roole-parser');
+var evaluator = require('roole-evaluator');
 
 var ast = parser.parse('body { margin: 0 }');
 evaluator.evaluate(ast).then(function (ast) {
